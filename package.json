@@ -1,0 +1,58 @@
+{
+  "name": "nuhelp-api",
+  "version": "0.0.0",
+  "description": "Nuhelp API and Admin Dashboard",
+  "main": "html/built/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nusait/nuhelp-api.git"
+  },
+  "keywords": [
+    "education"
+  ],
+  "author": "Hao Luo",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/nusait/nuhelp-api/issues"
+  },
+  "browser" : {
+      "Helper": "./js/support/Helper.js",
+      "Auth" : "./js/modules/Auth.js",
+      "Navigation" : "./js/modules/Navigation.js",
+      "Model": "./js/models/Model.js",
+      "Report": "./js/models/Report.js",
+      "View": "./js/views/View.js",
+      "ReportListView": "./js/views/ReportListView.js",
+      "ReportDetailedView": "./js/views/ReportDetailedView.js",
+      "ReportCreateView": "./js/views/ReportCreateView.js",
+      "report-list-template": "./js/templates/report-list.hbs"
+  },
+  "browserify": {
+    "transform": [
+      "hbsfy"
+    ]
+  },
+  "homepage": "https://github.com/nusait/nuhelp-api",
+  "devDependencies": {
+    "gulp": "^3.8.7",
+    "browserify": "^5.10.1",
+    "vinyl-source-stream": "^0.1.1",
+    "gulp-util": "^3.0.0",
+    "gulp-notify": "^1.5.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-ruby-sass": "^0.7.1",
+    "gulp-minify-css": "^0.3.7",
+    "gulp-autoprefixer": "0.0.8",
+    "gulp-browserify": "^0.5.0",
+    "gulp-livereload": "^2.1.1",
+    "tiny-lr": "^0.1.0",
+    "hbsfy": "^2.0.0",
+    "handlebars": "^1.3.0"
+  },
+  "dependencies": {
+    "mapbox.js": "^2.0.1"
+  }
+}

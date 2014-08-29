@@ -1,0 +1,12 @@
+#login-view {
+  width: 200px;
+  background-color: $silver;
+  padding: 10px;
+  &.closed {
+    position: relative;
+    top: -400px;
+  }
+  input {
+    width: 100%;
+  }
+}

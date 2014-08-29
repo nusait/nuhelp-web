@@ -1,0 +1,31 @@
+#topnav {
+  color: white;
+  padding: 10px;
+  background-color: $blue;
+  position: relative;
+  display: flex;
+  align-items: center;
+  @include depth-1;
+
+  .title {
+    font-size: 1.3em;
+    flex: 1;
+  }
+
+  nav {
+    display: inline;
+    justify-content: flex-end;
+    a {
+      display: inline-block;
+      font-size: 1.1em;
+      color: white;
+      text-decoration: none;
+      padding: 6px 15px;
+      transition: background-color 0.2s;
+      &:hover {
+        background-color: rgba($silver, 0.3);
+      }
+
+    }
+  }
+}

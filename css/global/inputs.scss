@@ -1,0 +1,119 @@
+$button-padding-top: 12px;
+$button-padding-right: 20px;
+$button-padding-bottom: 12px;
+$button-padding-left: 20px;
+
+button {
+  padding-top: $button-padding-top - 2px;
+  padding-bottom: $button-padding-bottom - 2px;
+}
+.button {
+  padding-top: $button-padding-top;
+  padding-bottom: $button-padding-bottom;
+}
+
+button, .button {
+  outline: none;
+  background-color: $blue;
+  display: inline-block;
+  color: lighten($silver, 10%);
+  text-decoration: none;
+  border: 0;
+  font-size: 1em;
+  margin: 5px;
+  cursor: pointer;
+  position: relative;
+  align-items: flex-start;
+  text-align: center;
+  box-sizing: border-box;
+  padding-left: $button-padding-left;
+  padding-right: $button-padding-right;
+  border-radius: 3px;
+  background-image: none;
+
+  @include depth-1;
+  &.round {
+    border-radius: 1000px;
+    width: 60px;
+    height: 60px;
+    font-size: 1.5em;
+    text-align: center;
+    i {
+      position: absolute;
+      margin-left: auto;
+      margin-right: auto;
+      left: 0;
+      right: 0;
+      top:30%;
+    }
+     &.small {
+       width: 40px;
+       height: 40px;
+       i {
+         top: 22%;
+       }
+     }
+  }
+  &.text {
+    background-color: transparent;
+    text-transform: uppercase;
+    box-shadow: none;
+    color: $silver;
+    font-weight: bold;
+    &:hover {
+      @include no-depth;
+      color: $blue;
+    }
+  }
+  &:hover, &:active {
+    @include depth-2;
+    color: white;
+  }
+}
+
+input {
+  font-size: 1em;
+  padding: 5px;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+.field {
+  display: flex;
+  label {
+
+  }
+  label + input, label + select {
+    flex: 1;
+  }
+  &.tags {
+    display: block;
+    a {
+      display: block;
+    }
+    input {
+      display: none;
+    }
+  }
+  &.textarea {
+    display: block;
+    textarea {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      border: none;
+    }
+  }
+  &.file {
+    input[type=file] {
+      display: none;
+    }
+    .button {
+      display:block;
+    }
+  }
+}
+
+input, textarea {
+  border: none;
+}

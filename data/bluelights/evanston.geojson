@@ -1,0 +1,1373 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6914227,
+          42.0656784
+        ],
+        "properties": {
+          "id": 1,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6914656,
+          42.0645793
+        ],
+        "properties": {
+          "id": 2,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6933861,
+          42.066236
+        ],
+        "properties": {
+          "id": 3,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6936865,
+          42.0654634
+        ],
+        "properties": {
+          "id": 4,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6939332,
+          42.0666183
+        ],
+        "properties": {
+          "id": 5,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6775718,
+          42.0611622
+        ],
+        "properties": {
+          "id": 6,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6774645,
+          42.0606285
+        ],
+        "properties": {
+          "id": 7,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6751256,
+          42.0607639
+        ],
+        "properties": {
+          "id": 8,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6748466,
+          42.0608038
+        ],
+        "properties": {
+          "id": 9,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6759624,
+          42.0598638
+        ],
+        "properties": {
+          "id": 10,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6753402,
+          42.0597523
+        ],
+        "properties": {
+          "id": 11,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6731622,
+          42.0590035
+        ],
+        "properties": {
+          "id": 12,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6718855,
+          42.0589876
+        ],
+        "properties": {
+          "id": 13,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6702654,
+          42.0589398
+        ],
+        "properties": {
+          "id": 14,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6769173,
+          42.0584778
+        ],
+        "properties": {
+          "id": 15,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.676456,
+          42.0576175
+        ],
+        "properties": {
+          "id": 16,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.674911,
+          42.0577928
+        ],
+        "properties": {
+          "id": 17,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6736772,
+          42.0575538
+        ],
+        "properties": {
+          "id": 18,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6730978,
+          42.0581671
+        ],
+        "properties": {
+          "id": 19,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6731622,
+          42.0572431
+        ],
+        "properties": {
+          "id": 20,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6722932,
+          42.0566457
+        ],
+        "properties": {
+          "id": 21,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6704264,
+          42.0560323
+        ],
+        "properties": {
+          "id": 22,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6733553,
+          42.0562633
+        ],
+        "properties": {
+          "id": 23,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6740742,
+          42.0562792
+        ],
+        "properties": {
+          "id": 24,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6748574,
+          42.0563509
+        ],
+        "properties": {
+          "id": 25,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6742887,
+          42.055626
+        ],
+        "properties": {
+          "id": 26,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.677089,
+          42.055395
+        ],
+        "properties": {
+          "id": 27,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6772606,
+          42.0573706
+        ],
+        "properties": {
+          "id": 28,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6752865,
+          42.0554109
+        ],
+        "properties": {
+          "id": 29,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6759195,
+          42.0553711
+        ],
+        "properties": {
+          "id": 30,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6757157,
+          42.0545824
+        ],
+        "properties": {
+          "id": 31,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6770997,
+          42.0542797
+        ],
+        "properties": {
+          "id": 32,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6756299,
+          42.0539611
+        ],
+        "properties": {
+          "id": 33,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6746857,
+          42.0542638
+        ],
+        "properties": {
+          "id": 34,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6732051,
+          42.0537221
+        ],
+        "properties": {
+          "id": 35,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6721966,
+          42.0530449
+        ],
+        "properties": {
+          "id": 36,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6700616,
+          42.052559
+        ],
+        "properties": {
+          "id": 37,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6701689,
+          42.053977
+        ],
+        "properties": {
+          "id": 38,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6713276,
+          42.0524714
+        ],
+        "properties": {
+          "id": 39,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6735163,
+          42.052782
+        ],
+        "properties": {
+          "id": 40,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6755762,
+          42.0530927
+        ],
+        "properties": {
+          "id": 41,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6753831,
+          42.0528936
+        ],
+        "properties": {
+          "id": 42,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6761234,
+          42.0517305
+        ],
+        "properties": {
+          "id": 43,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6751471,
+          42.0515632
+        ],
+        "properties": {
+          "id": 44,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6752758,
+          42.0513003
+        ],
+        "properties": {
+          "id": 45,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6736343,
+          42.0512684
+        ],
+        "properties": {
+          "id": 46,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6729262,
+          42.0510055
+        ],
+        "properties": {
+          "id": 47,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6716816,
+          42.0511967
+        ],
+        "properties": {
+          "id": 48,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6752436,
+          42.0498105
+        ],
+        "properties": {
+          "id": 49,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6758659,
+          42.0497069
+        ],
+        "properties": {
+          "id": 50,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6774108,
+          42.0511569
+        ],
+        "properties": {
+          "id": 51,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6780975,
+          42.0507028
+        ],
+        "properties": {
+          "id": 52,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6784837,
+          42.0515871
+        ],
+        "properties": {
+          "id": 53,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6784945,
+          42.0510533
+        ],
+        "properties": {
+          "id": 54,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6796961,
+          42.0520173
+        ],
+        "properties": {
+          "id": 55,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6799965,
+          42.0512047
+        ],
+        "properties": {
+          "id": 56,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6811337,
+          42.051611
+        ],
+        "properties": {
+          "id": 57,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6815951,
+          42.0512047
+        ],
+        "properties": {
+          "id": 58,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6802325,
+          42.0508143
+        ],
+        "properties": {
+          "id": 59,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6790845,
+          42.0498025
+        ],
+        "properties": {
+          "id": 60,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6847279,
+          42.0502566
+        ],
+        "properties": {
+          "id": 61,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6846635,
+          42.0521766
+        ],
+        "properties": {
+          "id": 62,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6843202,
+          42.0525032
+        ],
+        "properties": {
+          "id": 63,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6844382,
+          42.0531485
+        ],
+        "properties": {
+          "id": 64,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6846528,
+          42.0538814
+        ],
+        "properties": {
+          "id": 65,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6874638,
+          42.0540567
+        ],
+        "properties": {
+          "id": 66,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6872921,
+          42.0548294
+        ],
+        "properties": {
+          "id": 67,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.687732,
+          42.0548453
+        ],
+        "properties": {
+          "id": 68,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6780117,
+          42.0545745
+        ],
+        "properties": {
+          "id": 69,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6785052,
+          42.0542399
+        ],
+        "properties": {
+          "id": 70,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.677443,
+          42.0521447
+        ],
+        "properties": {
+          "id": 71,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6780868,
+          42.0523837
+        ],
+        "properties": {
+          "id": 72,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.679621,
+          42.0532043
+        ],
+        "properties": {
+          "id": 73,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6754045,
+          42.0592306
+        ],
+        "properties": {
+          "id": 74,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6764935,
+          42.0593142
+        ],
+        "properties": {
+          "id": 75,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6890409,
+          42.047261
+        ],
+        "properties": {
+          "id": 76,
+          "name": "",
+          "description": null,
+          "location": "Evanston",
+          "created_at": "2014-08-21 06:12:24",
+          "updated_at": "2014-08-21 06:12:24"
+        }
+      }
+    }
+  ]
+}
