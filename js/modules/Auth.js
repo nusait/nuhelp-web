@@ -1,7 +1,9 @@
+var Helper = require('Helper');
+
 function submitLogin(netid, password) {
     var promise = new Promise(function (resolve, reject) {
         var request = new XMLHttpRequest();
-        var path = 'api/login';
+        var path = Helper.url('login');
 
         request.open('post', path, true);
         request.setRequestHeader('Want-Cookies', 'true');
@@ -23,7 +25,7 @@ function submitLogin(netid, password) {
 function submitLogout() {
     var promise = new Promise(function (resolve, reject) {
         var request = new XMLHttpRequest();
-        var path = 'api/logout';
+        var path = Helper.url('logout');
 
         request.open('get', path, true);
         request.onreadystatechange = function () {

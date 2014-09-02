@@ -1,26 +1,12 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var loginTemp = require('./templates/login.hbs');
+require('start');
+
 var Auth = require('Auth');
 var Navigation = require('Navigation');
-var View = require('View');
 var Helper = require('Helper');
 var ReportListView = require('ReportListView');
-
-var login = loginTemp();
-
-//document.body.insertAdjacentHTML('beforeend', login);
-
-document.querySelector('#login-view').innerHTML = login;
-
-document.querySelector('#login-view form').addEventListener('submit', function (evt) {
-    evt.preventDefault();
-    var netid = this.querySelector('#netid').value;
-    var password = this.querySelector('#password').value;
-    var login = Auth.login(netid, password);
-    login.then(function (request) {
-        console.log(request.responseText);
-    });
-});
+var ReportCreationView = require('ReportCreationView');
+var LoginView = require('LoginView');
 
 Navigation.bindNavigationEvents();
 
@@ -221,22 +207,25 @@ listView = new ReportListView(reports);
 listView.render();
 listView.on('click', '.report-list-item', function (evt) {
     console.log(evt);
+    console.log(this);
     console.log(this.querySelector('.person').innerText);
 });
 listView.on('click', '.report-list-item', function (evt) {
     console.log(this.querySelector('.role').innerText);
 });
 
-window.body = document.body;
-window.liView = document.querySelector('#report-list-view');
-window.roleView = document.querySelector('.role');
+creationView = new ReportCreationView();
+creationView.render();
 
-console.log(Helper.has(roleView, liView));
-},{"./templates/login.hbs":5,"Auth":2,"Helper":4,"Navigation":3,"ReportListView":7,"View":8}],2:[function(require,module,exports){
+loginView = new LoginView();
+loginView.render();
+},{"Auth":2,"Helper":6,"LoginView":11,"Navigation":3,"ReportCreationView":12,"ReportListView":13,"start":7}],2:[function(require,module,exports){
+var Helper = require('Helper');
+
 function submitLogin(netid, password) {
     var promise = new Promise(function (resolve, reject) {
         var request = new XMLHttpRequest();
-        var path = 'api/login';
+        var path = Helper.url('login');
 
         request.open('post', path, true);
         request.setRequestHeader('Want-Cookies', 'true');
@@ -258,7 +247,7 @@ function submitLogin(netid, password) {
 function submitLogout() {
     var promise = new Promise(function (resolve, reject) {
         var request = new XMLHttpRequest();
-        var path = 'api/logout';
+        var path = Helper.url('logout');
 
         request.open('get', path, true);
         request.onreadystatechange = function () {
@@ -277,7 +266,7 @@ var Auth = {
 };
 
 module.exports = Auth;
-},{}],3:[function(require,module,exports){
+},{"Helper":6}],3:[function(require,module,exports){
 var Helpers = require('Helper');
 var Auth = require('Auth');
 
@@ -303,7 +292,52 @@ var Navigation = {
 };
 
 module.exports = Navigation;
-},{"Auth":2,"Helper":4}],4:[function(require,module,exports){
+},{"Auth":2,"Helper":6}],4:[function(require,module,exports){
+var Config = {
+    baseUrl: [
+        '//nuhelp.api',
+        '//test.dosa.northwestern.edu',
+        '//go.dosa.northwestern.edu'
+    ]
+};
+
+module.exports = Config;
+},{}],5:[function(require,module,exports){
+var Env = {
+    LOCAL : 0,
+    DEV : 1,
+    PROD : 2,
+    getEnvironment: function () {
+        if (document.querySelector('html').classList.contains('env-local')) {
+            return this.LOCAL;
+        } else if (document.querySelector('html').classList.contains('env-dev')) {
+            return this.DEV;
+        } else {
+            return this.PROD;
+        }
+    },
+    setEnvironment: function (env) {
+        if (env === this.LOCAL) {
+            document.querySelector('html').classList.remove('env-test');
+            document.querySelector('html').classList.remove('env-prod');
+            document.querySelector('html').classList.add('env-local');
+        } else if (env === this.DEV) {
+            document.querySelector('html').classList.remove('env-local');
+            document.querySelector('html').classList.remove('env-prod');
+            document.querySelector('html').classList.add('env-test');
+        } else if (env === this.PROD) {
+            document.querySelector('html').classList.remove('env-test');
+            document.querySelector('html').classList.remove('env-local');
+            document.querySelector('html').classList.add('env-prod');
+        }
+    }
+};
+
+module.exports = Env;
+},{}],6:[function(require,module,exports){
+var Config = require('Config');
+var Env = require('Env');
+
 function hasClass(node, className) {
    return node.classList.contains(className);
 }
@@ -345,11 +379,11 @@ function isElementThisSelector(el, selector) {
     return result.indexOf(el) > -1;
 }
 
-function isElementChildOfParent(child, parent, upperStop) {
+function isElementChildOfParent(child, parentSelector, upperStop) {
     if (typeof upperStop === 'undefined') {
         upperStop = document.body;
     }
-    if (child === parent) {
+    if (child.matches(parentSelector)) {
         return true;
     }
 
@@ -357,7 +391,44 @@ function isElementChildOfParent(child, parent, upperStop) {
         return false;
     }
 
-    return isElementChildOfParent(child.parentElement, parent, upperStop);
+    return isElementChildOfParent(child.parentElement, parentSelector, upperStop);
+}
+
+function findParentWithSelector(child, parentSelector, upperStop) {
+    if (typeof upperStop === 'undefined') {
+        upperStop = document.body;
+    }
+    if (child.matches(parentSelector)) {
+        return child;
+    }
+
+    if (child === upperStop) {
+        return false;
+    }
+
+    return findParentWithSelector(child.parentElement, parentSelector, upperStop);
+}
+
+function url(resource) {
+    var base = baseUrl();
+    return base + '/api/' + resource + '/';
+}
+
+function baseUrl(secure) {
+    return Config.baseUrl[Env.getEnvironment()];
+}
+
+function queryString() {
+    var result = {},
+        queryString = location.search.slice(1),
+        re = /([^&=]+)=([^&]*)/g,
+        m;
+
+    while (m = re.exec(queryString)) {
+        result[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+    }
+
+    return result;
 }
 
 var Helper = {
@@ -366,11 +437,61 @@ var Helper = {
     hasClass: hasClass,
     mixin: mixin,
     is: isElementThisSelector,
-    has: isElementChildOfParent
+    has: isElementChildOfParent,
+    url: url,
+    queryString: queryString,
+    findParent: findParentWithSelector
 };
 
 module.exports = Helper;
-},{}],5:[function(require,module,exports){
+},{"Config":4,"Env":5}],7:[function(require,module,exports){
+var Env = require('Env');
+var Helper = require('Helper');
+
+function detectEnv() {
+    if( !! forceEnv()) return forceEnv();
+    if(isOnLocal()) return Env.LOCAL;
+    if(isOnTest()) return Env.TEST;
+    return Env.PROD;
+}
+
+function forceEnv() {
+    var value = Helper.queryString()['force-env'];
+    if ( ! value) {
+        return null;
+    }
+    value = value.toLowerCase();
+    if (value == 'local') {
+        return 0;
+    } else if (value === 'test') {
+        return 1;
+    }
+    return 2;
+}
+
+function isOnLocal() {
+    return (/nuhelp\.web/.test(location.host));
+}
+
+function isOnTest() {
+    return (/test\.dosa\.northwestern\.edu/.test(location.host));
+}
+
+function shimMatches() {
+    if (typeof Element.prototype.matches === 'function') return;
+
+    Element.prototype.matches =
+        Element.prototype.webkitMatchesSelector ||
+        Element.prototype.mozMatchesSelector ||
+        Element.prototype.msMatchesSelector ||
+        Element.prototype.oMatchesSelector;
+}
+
+shimMatches();
+Env.setEnvironment(detectEnv());
+
+
+},{"Env":5,"Helper":6}],8:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -382,7 +503,19 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   return "<form action=\"\">\n    <label class=\"hidden\" for=\"netid\">NetID:</label><input type=\"text\" id=\"netid\" name=\"netid\" placeholder=\"NetID\"/>\n    <br>\n    <label class=\"hidden\" for=\"password\">Password</label><input type=\"password\" id=\"password\" name=\"password\" placeholder=\"Password\"/>\n    <button type=\"submit\">Login</button>\n</form>\n";
   });
 
-},{"hbsfy/runtime":16}],6:[function(require,module,exports){
+},{"hbsfy/runtime":22}],9:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "<form>\n    <h2>Information</h2>\n    <div class=\"field\">\n        <label for=\"reporters_full_name\">Your Name</label>\n        <input type=\"text\" id=\"reporters_full_name\" name=\"reporters_full_name\" placeholder=\"Your Name\"/>\n    </div>\n    <div class=\"field\">\n        <label for=\"reporters_phone_number\">Your Phone</label>\n        <input type=\"text\" id=\"reporters_phone_number\" name=\"reporters_phone_number\"/>\n    </div>\n    <div class=\"field\">\n        <label for=\"reporters_email_address\">Your Email</label>\n        <input type=\"text\" id=\"reporters_email_address\" name=\"reporters_email_address\"/>\n    </div>\n    <div class=\"field\">\n        <label for=\"date_of_incident\">Date of Incident</label>\n        <input type=\"date\" id=\"date_of_incident\" name=\"date_of_incident\"/>\n    </div>\n    <div class=\"field\">\n        <label for=\"time_of_incident\">Time of Incident</label>\n        <input type=\"time\" id=\"time_of_incident\" name=\"date_of_incident\"/>\n    </div>\n    <div class=\"field\">\n        <label for=\"location_of_incident_specific\">Location</label>\n        <input type=\"text\" id=\"location_of_incident_specific\" name=\"location_of_incident_specific\"/>\n    </div>\n    <h2>Incident Details</h2>\n    <div class=\"field\">\n        <label for=\"person\">Person of Concern</label>\n        <input type=\"text\" id=\"person\" name=\"person[]\" />\n    </div>\n    <div class=\"field\">\n        <label for=\"role\">Role</label>\n        <select name=\"role[]\" id=\"role\">\n            <option value=\"Subject of Concern\">Subject of Concern</option>\n            <option value=\"Victim/Target\">Victim/Target</option>\n            <option value=\"Witness\">Witness</option>\n            <option value=\"Other\">Other</option>\n        </select>\n    </div>\n    <div class=\"field tags\">\n        <label>Nature of Concern</label>\n        <a class=\"button round small\"><i class=\"icon-plus3\"></i></a>\n        <input type=\"checkbox\" name=\"aq[1][answer][]\" value=\"Academic\">\n        <input type=\"checkbox\" name=\"aq[1][answer][]\" value=\"Behavior/Misconduct\">\n        <input type=\"checkbox\" name=\"aq[1][answer][]\" value=\"Classroom Disruption\">\n        <input type=\"checkbox\" name=\"aq[1][answer][]\" value=\"Eating Disorder/Body Image\">\n        <input type=\"checkbox\" name=\"aq[1][answer][]\" value=\"Economic/Financial\">\n        <input type=\"checkbox\" name=\"aq[1][answer][]\" value=\"Family Issues\">\n        <input type=\"checkbox\" name=\"aq[1][answer][]\" value=\"Harassment/Stalking\">\n        <input type=\"checkbox\" name=\"aq[1][answer][]\" value=\"Hazing\">\n        <input type=\"checkbox\" name=\"aq[1][answer][]\" value=\"Health/Illness/Injury\">\n        <input type=\"checkbox\" name=\"aq[1][answer][]\" value=\"Housing\">\n        <input type=\"checkbox\" name=\"aq[1][answer][]\" value=\"Mental Health/Emotional Health\">\n        <input type=\"checkbox\" name=\"aq[1][answer][]\" value=\"Missing Student\">\n        <input type=\"checkbox\" name=\"aq[1][answer][]\" value=\"Relationship Issues/Violence\">\n        <input type=\"checkbox\" name=\"aq[1][answer][]\" value=\"Self-Harm\">\n        <input type=\"checkbox\" name=\"aq[1][answer][]\" value=\"Sexual Misconduct/Violence\">\n        <input type=\"checkbox\" name=\"aq[1][answer][]\" value=\"Social/Adjustment Issues\">\n        <input type=\"checkbox\" name=\"aq[1][answer][]\" value=\"Substance Abuse/Misuse\">\n        <input type=\"checkbox\" name=\"aq[1][answer][]\" value=\"Suicidal Ideas/Thoughts/Actions\">\n        <input type=\"checkbox\" name=\"aq[1][answer][]\" value=\"Violence/Threats of Harm\">\n        <input type=\"checkbox\" name=\"aq[1][answer][]\" value=\"Weapons/Explosives\">\n        <input type=\"checkbox\" name=\"aq[1][answer][]\" value=\"Other (Describe in detail below)\">\n    </div>\n\n    <div class=\"field textarea\">\n        <label for=\"aq[2][answer]\">Description of Concern/Issue</label>\n        <textarea id=\"aq[2][answer]\" name=\"aq[2][answer]\"></textarea>\n    </div>\n    <h2>Take a Photo</h2>\n    <div class=\"field file\">\n        <input type=\"file\" name=\"uploadedFiles[]\" id=\"uploadedFiles[]\"/>\n        <a class=\"button round\"><i class=\"icon-camera\"></i></a>\n    </div>\n    <div class=\"field submit\">\n        <button type=\"submit\">Submit</button>\n    </div>\n</form>";
+  });
+
+},{"hbsfy/runtime":22}],10:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -410,7 +543,71 @@ function program1(depth0,data) {
   else { return ''; }
   });
 
-},{"hbsfy/runtime":16}],7:[function(require,module,exports){
+},{"hbsfy/runtime":22}],11:[function(require,module,exports){
+var Auth = require('Auth');
+var View = require('View');
+var Helper = require('Helper');
+var loginTemp = require('login-template');
+
+function bindEvents() {
+    this.on('submit', 'form', function (evt) {
+        evt.preventDefault();
+        var netid = this.querySelector('#netid').value;
+        var password = this.querySelector('#password').value;
+        var login = Auth.login(netid, password);
+        login.then(function (request) {
+            console.log(request.responseText);
+        });
+    });
+}
+
+function LoginView() {
+    View.call(this);
+    bindEvents.call(this);
+}
+
+LoginView.prototype = Object.create(View.prototype);
+
+var proto = {
+    sel: '#login-view',
+    template: loginTemp
+};
+
+Helper.mixin(LoginView.prototype, proto);
+
+module.exports = LoginView;
+},{"Auth":2,"Helper":6,"View":14,"login-template":8}],12:[function(require,module,exports){
+var View = require('View');
+var Helper = require('Helper');
+var ReportCreationTemp = require('report-creation-template');
+
+function submitReport() {
+
+}
+
+function bindEvents() {
+    this.on('submit', 'form', function (evt) {
+        evt.preventDefault();
+    });
+}
+
+function ReportCreationView () {
+    View.call(this);
+    bindEvents.call(this);
+}
+ReportCreationView.prototype = Object.create(View.prototype);
+
+ReportCreationView.prototype.constructor = ReportCreationView;
+
+var proto = {
+    sel: '#report-creation-view',
+    template: ReportCreationTemp
+};
+
+Helper.mixin(ReportCreationView.prototype, proto);
+
+module.exports = ReportCreationView;
+},{"Helper":6,"View":14,"report-creation-template":9}],13:[function(require,module,exports){
 var View = require('View');
 var Helper = require('Helper');
 var reportListTemp = require('report-list-template');
@@ -418,7 +615,10 @@ var reportListTemp = require('report-list-template');
 function ReportListView (reports) {
     View.call(this);
     this.reports = reports;
-    this.el = document.querySelector('#report-list-view');
+}
+
+function render() {
+    return View.prototype.render.call(this, this.reports);
 }
 
 ReportListView.prototype = Object.create(View.prototype);
@@ -426,20 +626,16 @@ ReportListView.prototype = Object.create(View.prototype);
 ReportListView.prototype.constructor = ReportListView;
 
 var proto = {
+    sel: '#report-list-view',
     reports: [],
     template: reportListTemp,
-    render: function () {
-        this.el.innerHTML = this.template(this.reports);
-    }
+    render: render
 };
 
 Helper.mixin(ReportListView.prototype, proto);
-Helper.mixin = function (target) {
-    target.doSomething = Helper.prototype.doSomething;
-};
 
 module.exports = ReportListView;
-},{"Helper":4,"View":8,"report-list-template":6}],8:[function(require,module,exports){
+},{"Helper":6,"View":14,"report-list-template":10}],14:[function(require,module,exports){
 var Helper = require('Helper');
 
 var mixin = Helper.mixin;
@@ -448,6 +644,7 @@ var is = Helper.is;
 
 function View (node) {
     this.elEventListeners = {};
+    this.el = document.querySelector(this.sel);
     if (typeof node !== 'undefined') {
         this.el = node;
     }
@@ -457,9 +654,10 @@ function createDelegateEventListener(eventName) {
     this.el.addEventListener(eventName, function (evt) {
         var eventArray = this.elEventListeners[eventName];
         for (var selector in eventArray) {
-            if (is(evt.target, selector)) {
+            var el = Helper.findParent(evt.target, selector, this.el);
+            if ( !! el) {
                 eventArray[selector].forEach(function (callback) {
-                    callback.call(evt.target, evt);
+                    callback.call(el, evt);
                 });
             }
         }
@@ -491,18 +689,22 @@ function addEvent (event, funcOrSelector, func) {
     }
 }
 
+function render(rendObj) {
+    this.el.innerHTML = this.template(rendObj);
+}
+
 var proto = {
     el: document.body,
     elEventListeners: {}, //'input' : [func, func]
     on: addEvent,
-    qa: qa.bind(this.el)
+    render: render
 };
 
 mixin(View.prototype, proto);
 
 module.exports = View;
 
-},{"Helper":4}],9:[function(require,module,exports){
+},{"Helper":6}],15:[function(require,module,exports){
 "use strict";
 /*globals Handlebars: true */
 var base = require("./handlebars/base");
@@ -535,7 +737,7 @@ var Handlebars = create();
 Handlebars.create = create;
 
 exports["default"] = Handlebars;
-},{"./handlebars/base":10,"./handlebars/exception":11,"./handlebars/runtime":12,"./handlebars/safe-string":13,"./handlebars/utils":14}],10:[function(require,module,exports){
+},{"./handlebars/base":16,"./handlebars/exception":17,"./handlebars/runtime":18,"./handlebars/safe-string":19,"./handlebars/utils":20}],16:[function(require,module,exports){
 "use strict";
 var Utils = require("./utils");
 var Exception = require("./exception")["default"];
@@ -716,7 +918,7 @@ exports.log = log;var createFrame = function(object) {
   return obj;
 };
 exports.createFrame = createFrame;
-},{"./exception":11,"./utils":14}],11:[function(require,module,exports){
+},{"./exception":17,"./utils":20}],17:[function(require,module,exports){
 "use strict";
 
 var errorProps = ['description', 'fileName', 'lineNumber', 'message', 'name', 'number', 'stack'];
@@ -745,7 +947,7 @@ function Exception(message, node) {
 Exception.prototype = new Error();
 
 exports["default"] = Exception;
-},{}],12:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 "use strict";
 var Utils = require("./utils");
 var Exception = require("./exception")["default"];
@@ -883,7 +1085,7 @@ exports.program = program;function invokePartial(partial, name, context, helpers
 exports.invokePartial = invokePartial;function noop() { return ""; }
 
 exports.noop = noop;
-},{"./base":10,"./exception":11,"./utils":14}],13:[function(require,module,exports){
+},{"./base":16,"./exception":17,"./utils":20}],19:[function(require,module,exports){
 "use strict";
 // Build out our basic SafeString type
 function SafeString(string) {
@@ -895,7 +1097,7 @@ SafeString.prototype.toString = function() {
 };
 
 exports["default"] = SafeString;
-},{}],14:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 "use strict";
 /*jshint -W004 */
 var SafeString = require("./safe-string")["default"];
@@ -972,12 +1174,12 @@ exports.escapeExpression = escapeExpression;function isEmpty(value) {
 }
 
 exports.isEmpty = isEmpty;
-},{"./safe-string":13}],15:[function(require,module,exports){
+},{"./safe-string":19}],21:[function(require,module,exports){
 // Create a simple path alias to allow browserify to resolve
 // the runtime on a supported path.
 module.exports = require('./dist/cjs/handlebars.runtime');
 
-},{"./dist/cjs/handlebars.runtime":9}],16:[function(require,module,exports){
+},{"./dist/cjs/handlebars.runtime":15}],22:[function(require,module,exports){
 module.exports = require("handlebars/runtime")["default"];
 
-},{"handlebars/runtime":15}]},{},[1]);
+},{"handlebars/runtime":21}]},{},[1]);

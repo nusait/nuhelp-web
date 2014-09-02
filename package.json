@@ -19,16 +19,22 @@
     "url": "https://github.com/nusait/nuhelp-api/issues"
   },
   "browser" : {
+      "start": "./js/support/start.js",
+      "Config": "./js/support/Config.js",
       "Helper": "./js/support/Helper.js",
+      "Env": "./js/support/Env.js",
       "Auth" : "./js/modules/Auth.js",
       "Navigation" : "./js/modules/Navigation.js",
       "Model": "./js/models/Model.js",
       "Report": "./js/models/Report.js",
       "View": "./js/views/View.js",
       "ReportListView": "./js/views/ReportListView.js",
+      "report-list-template": "./js/templates/report-list.hbs",
       "ReportDetailedView": "./js/views/ReportDetailedView.js",
-      "ReportCreateView": "./js/views/ReportCreateView.js",
-      "report-list-template": "./js/templates/report-list.hbs"
+      "ReportCreationView": "./js/views/ReportCreationView.js",
+      "report-creation-template": "./js/templates/report-creation.hbs",
+      "LoginView": "./js/views/LoginView.js",
+      "login-template": "./js/templates/login.hbs"
   },
   "browserify": {
     "transform": [

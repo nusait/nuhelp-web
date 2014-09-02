@@ -6,6 +6,7 @@ var is = Helper.is;
 
 function View (node) {
     this.elEventListeners = {};
+    this.el = document.querySelector(this.sel);
     if (typeof node !== 'undefined') {
         this.el = node;
     }
@@ -15,9 +16,10 @@ function createDelegateEventListener(eventName) {
     this.el.addEventListener(eventName, function (evt) {
         var eventArray = this.elEventListeners[eventName];
         for (var selector in eventArray) {
-            if (is(evt.target, selector)) {
+            var el = Helper.findParent(evt.target, selector, this.el);
+            if ( !! el) {
                 eventArray[selector].forEach(function (callback) {
-                    callback.call(evt.target, evt);
+                    callback.call(el, evt);
                 });
             }
         }
@@ -49,11 +51,15 @@ function addEvent (event, funcOrSelector, func) {
     }
 }
 
+function render(rendObj) {
+    this.el.innerHTML = this.template(rendObj);
+}
+
 var proto = {
     el: document.body,
     elEventListeners: {}, //'input' : [func, func]
     on: addEvent,
-    qa: qa.bind(this.el)
+    render: render
 };
 
 mixin(View.prototype, proto);

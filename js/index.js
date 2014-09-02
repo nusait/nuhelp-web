@@ -1,25 +1,11 @@
-var loginTemp = require('./templates/login.hbs');
+require('start');
+
 var Auth = require('Auth');
 var Navigation = require('Navigation');
-var View = require('View');
 var Helper = require('Helper');
 var ReportListView = require('ReportListView');
-
-var login = loginTemp();
-
-//document.body.insertAdjacentHTML('beforeend', login);
-
-document.querySelector('#login-view').innerHTML = login;
-
-document.querySelector('#login-view form').addEventListener('submit', function (evt) {
-    evt.preventDefault();
-    var netid = this.querySelector('#netid').value;
-    var password = this.querySelector('#password').value;
-    var login = Auth.login(netid, password);
-    login.then(function (request) {
-        console.log(request.responseText);
-    });
-});
+var ReportCreationView = require('ReportCreationView');
+var LoginView = require('LoginView');
 
 Navigation.bindNavigationEvents();
 
@@ -220,14 +206,15 @@ listView = new ReportListView(reports);
 listView.render();
 listView.on('click', '.report-list-item', function (evt) {
     console.log(evt);
+    console.log(this);
     console.log(this.querySelector('.person').innerText);
 });
 listView.on('click', '.report-list-item', function (evt) {
     console.log(this.querySelector('.role').innerText);
 });
 
-window.body = document.body;
-window.liView = document.querySelector('#report-list-view');
-window.roleView = document.querySelector('.role');
+creationView = new ReportCreationView();
+creationView.render();
 
-console.log(Helper.has(roleView, liView));
+loginView = new LoginView();
+loginView.render();

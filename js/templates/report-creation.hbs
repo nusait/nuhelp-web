@@ -1,0 +1,79 @@
+<form>
+    <h2>Information</h2>
+    <div class="field">
+        <label for="reporters_full_name">Your Name</label>
+        <input type="text" id="reporters_full_name" name="reporters_full_name" placeholder="Your Name"/>
+    </div>
+    <div class="field">
+        <label for="reporters_phone_number">Your Phone</label>
+        <input type="text" id="reporters_phone_number" name="reporters_phone_number"/>
+    </div>
+    <div class="field">
+        <label for="reporters_email_address">Your Email</label>
+        <input type="text" id="reporters_email_address" name="reporters_email_address"/>
+    </div>
+    <div class="field">
+        <label for="date_of_incident">Date of Incident</label>
+        <input type="date" id="date_of_incident" name="date_of_incident"/>
+    </div>
+    <div class="field">
+        <label for="time_of_incident">Time of Incident</label>
+        <input type="time" id="time_of_incident" name="date_of_incident"/>
+    </div>
+    <div class="field">
+        <label for="location_of_incident_specific">Location</label>
+        <input type="text" id="location_of_incident_specific" name="location_of_incident_specific"/>
+    </div>
+    <h2>Incident Details</h2>
+    <div class="field">
+        <label for="person">Person of Concern</label>
+        <input type="text" id="person" name="person[]" />
+    </div>
+    <div class="field">
+        <label for="role">Role</label>
+        <select name="role[]" id="role">
+            <option value="Subject of Concern">Subject of Concern</option>
+            <option value="Victim/Target">Victim/Target</option>
+            <option value="Witness">Witness</option>
+            <option value="Other">Other</option>
+        </select>
+    </div>
+    <div class="field tags">
+        <label>Nature of Concern</label>
+        <a class="button round small"><i class="icon-plus3"></i></a>
+        <input type="checkbox" name="aq[1][answer][]" value="Academic">
+        <input type="checkbox" name="aq[1][answer][]" value="Behavior/Misconduct">
+        <input type="checkbox" name="aq[1][answer][]" value="Classroom Disruption">
+        <input type="checkbox" name="aq[1][answer][]" value="Eating Disorder/Body Image">
+        <input type="checkbox" name="aq[1][answer][]" value="Economic/Financial">
+        <input type="checkbox" name="aq[1][answer][]" value="Family Issues">
+        <input type="checkbox" name="aq[1][answer][]" value="Harassment/Stalking">
+        <input type="checkbox" name="aq[1][answer][]" value="Hazing">
+        <input type="checkbox" name="aq[1][answer][]" value="Health/Illness/Injury">
+        <input type="checkbox" name="aq[1][answer][]" value="Housing">
+        <input type="checkbox" name="aq[1][answer][]" value="Mental Health/Emotional Health">
+        <input type="checkbox" name="aq[1][answer][]" value="Missing Student">
+        <input type="checkbox" name="aq[1][answer][]" value="Relationship Issues/Violence">
+        <input type="checkbox" name="aq[1][answer][]" value="Self-Harm">
+        <input type="checkbox" name="aq[1][answer][]" value="Sexual Misconduct/Violence">
+        <input type="checkbox" name="aq[1][answer][]" value="Social/Adjustment Issues">
+        <input type="checkbox" name="aq[1][answer][]" value="Substance Abuse/Misuse">
+        <input type="checkbox" name="aq[1][answer][]" value="Suicidal Ideas/Thoughts/Actions">
+        <input type="checkbox" name="aq[1][answer][]" value="Violence/Threats of Harm">
+        <input type="checkbox" name="aq[1][answer][]" value="Weapons/Explosives">
+        <input type="checkbox" name="aq[1][answer][]" value="Other (Describe in detail below)">
+    </div>
+
+    <div class="field textarea">
+        <label for="aq[2][answer]">Description of Concern/Issue</label>
+        <textarea id="aq[2][answer]" name="aq[2][answer]"></textarea>
+    </div>
+    <h2>Take a Photo</h2>
+    <div class="field file">
+        <input type="file" name="uploadedFiles[]" id="uploadedFiles[]"/>
+        <a class="button round"><i class="icon-camera"></i></a>
+    </div>
+    <div class="field submit">
+        <button type="submit">Submit</button>
+    </div>
+</form>
