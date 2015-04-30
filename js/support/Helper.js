@@ -101,9 +101,6 @@ function envSecured() {
 }
 
 function baseUrl(secure) {
-    if (Env.getEnvironment() !== 0) {
-        return '../nuhelpapi';
-    }
     if (secure) {
         return 'https:' + Config.baseUrl[Env.getEnvironment()];
     }
