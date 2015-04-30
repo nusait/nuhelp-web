@@ -48,6 +48,60 @@ table {
 .hidden {
   display: none !important; }
 
+@-webkit-keyframes ripple {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+    opacity: 0.0; }
+  25% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+    opacity: 0.1; }
+  50% {
+    -webkit-transform: scale(0.7);
+            transform: scale(0.7);
+    opacity: 0.8; }
+  75% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 0.4; }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 0; } }
+
+@keyframes ripple {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+    opacity: 0.0; }
+  25% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+    opacity: 0.1; }
+  50% {
+    -webkit-transform: scale(0.7);
+            transform: scale(0.7);
+    opacity: 0.8; }
+  75% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 0.4; }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 0; } }
+.ripple {
+  width: 80px;
+  height: 80px;
+  border-radius: 1000px;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.4);
+  -webkit-animation: ripple 0.3s ease;
+          animation: ripple 0.3s ease;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards; }
+
 /* Google Colors */
 .depth-1 {
   -webkit-transition: box-shadow 0.2s, color 0.2s;
@@ -75,7 +129,7 @@ button {
 button, .button {
   outline: none;
   background-color: #5677fc;
-  display: inline-block;
+  display: block;
   color: #d9dcde;
   text-decoration: none;
   border: 0;
@@ -88,8 +142,7 @@ button, .button {
       -ms-flex-align: start;
           align-items: flex-start;
   text-align: center;
-  -moz-box-sizing: border-box;
-       box-sizing: border-box;
+  box-sizing: border-box;
   padding-left: 20px;
   padding-right: 20px;
   border-radius: 3px;
@@ -126,18 +179,23 @@ button, .button {
               transition: none;
       box-shadow: none;
       color: #5677fc; }
-  button:hover, button:active, .button:hover, .button:active {
+  button:hover, .button:hover {
     -webkit-transition: box-shadow 0.2s, color 0.2s;
             transition: box-shadow 0.2s, color 0.2s;
     box-shadow: 0px 1px 8px rgba(100, 100, 100, 0.9);
     color: white; }
+  button:active, .button:active {
+    -webkit-transition: box-shadow 0.2s, color 0.2s;
+            transition: box-shadow 0.2s, color 0.2s;
+    box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.5);
+    color: white;
+    background-color: #476bfc; }
 
 input {
   font-size: 1em;
   padding: 5px;
   border-radius: 3px;
-  -moz-box-sizing: border-box;
-       box-sizing: border-box; }
+  box-sizing: border-box; }
 
 .field {
   display: -webkit-box;
@@ -162,8 +220,6 @@ input {
       margin: 0;
       padding: 0;
       border: none; }
-  .field.file input[type=file] {
-    display: none; }
   .field.file .button {
     display: block; }
 

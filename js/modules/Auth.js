@@ -1,46 +1,80 @@
 var Helper = require('Helper');
+var Session = require('Session');
+var User = require('User');
+
+function Auth() {
+    this.currentUser = null;
+
+}
+
+function setCurrentUser(json) {
+    this.currentUser = new User(json);
+}
 
 function submitLogin(netid, password) {
-    var promise = new Promise(function (resolve, reject) {
-        var request = new XMLHttpRequest();
-        var path = Helper.url('login');
-
-        request.open('post', path, true);
-        request.setRequestHeader('Want-Cookies', 'true');
-
-        var formData = new FormData();
-        formData.append('netid', netid);
-        formData.append('password', password);
-        request.onreadystatechange = function () {
-            if (request.readyState == 4) {
-                resolve(request);
-            }
-        };
-        console.log('send request to: ' + path);
-        request.send(formData);
-    });
-    return promise;
+    return Helper.ajax('post', Helper.url('login'), {
+        netid: netid,
+        password: password
+    }).then(function (json) {
+        Session.start(json.netid, json['app_token']);
+        setCurrentUser.call(this, json);
+        App.make('events').emit('auth.userLoggedIn', this.currentUser);
+        return new Promise(function (resolve) {
+            resolve(json);
+        });
+    }.bind(this));
 }
 
 function submitLogout() {
-    var promise = new Promise(function (resolve, reject) {
-        var request = new XMLHttpRequest();
-        var path = Helper.url('logout');
-
-        request.open('get', path, true);
-        request.onreadystatechange = function () {
-            if (request.readyState == 4) {
-                resolve(request);
-            }
-        };
-        request.send();
-    });
-    return promise;
+    Session.end();
+    App.make('events').emit('auth.userLoggedOut');
+    return Helper.ajax(
+        'get', Helper.url('logout')
+    );
 }
 
-var Auth = {
+function isUserLoggedIn() {
+    return !! Session.user();
+}
+
+function fetchUserInfo() {
+    var request = Helper.ajax('get', Helper.url('users', {query : 'current'}));
+    request.then(function (json) {
+        console.log(json);
+        return new Promise (function (resolve) {
+            resolve(json);
+        });
+    }).catch(function (err) {
+        setTimeout(function () {
+            throw err;
+        }, 1);
+    });
+
+    return request;
+}
+
+function startAuthPromise() {
+    if (this.check()) {
+        var req = fetchUserInfo();
+        return req.then(function(json) {
+            setCurrentUser.call(this, json);
+            return new Promise(function (resolve) {
+                resolve(json);
+            });
+        }.bind(this));
+    } else {
+        console.log('not logged in');
+        return new Promise(function (resolve) {
+            resolve('not logged in');
+        });
+    }
+}
+
+Auth.prototype = {
     login: submitLogin,
-    logout: submitLogout
+    logout: submitLogout,
+    check: isUserLoggedIn,
+    start: startAuthPromise
 };
 
 module.exports = Auth;

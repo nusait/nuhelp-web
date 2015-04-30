@@ -15,7 +15,7 @@ button {
 button, .button {
   outline: none;
   background-color: $blue;
-  display: inline-block;
+  display: block;
   color: lighten($silver, 10%);
   text-decoration: none;
   border: 0;
@@ -65,9 +65,14 @@ button, .button {
       color: $blue;
     }
   }
-  &:hover, &:active {
+  &:hover {
     @include depth-2;
+    color:white;
+  }
+  &:active {
+    @include depth-1;
     color: white;
+    background-color: darken($blue, 3%);
   }
 }
 
@@ -105,9 +110,6 @@ input {
     }
   }
   &.file {
-    input[type=file] {
-      display: none;
-    }
     .button {
       display:block;
     }

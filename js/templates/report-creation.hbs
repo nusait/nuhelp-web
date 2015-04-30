@@ -1,40 +1,52 @@
-<form>
+<form action="/" method="post" enctype="multipart/form-data">
     <h2>Information</h2>
     <div class="field">
+        <label for="reporters_full_name">Netid</label>
+        <input type="text" id="reporters_netid" name="reporters_netid" placeholder="Netid" value="howlowck"/>
+    </div>
+    <div class="field">
         <label for="reporters_full_name">Your Name</label>
-        <input type="text" id="reporters_full_name" name="reporters_full_name" placeholder="Your Name"/>
+        <input type="text" id="reporters_full_name" name="reporters_full_name" placeholder="Your Name" value="Hao Luo"/>
     </div>
     <div class="field">
         <label for="reporters_phone_number">Your Phone</label>
-        <input type="text" id="reporters_phone_number" name="reporters_phone_number"/>
+        <input type="text" id="reporters_phone_number" name="reporters_phone_number" value="7024592341"/>
     </div>
     <div class="field">
         <label for="reporters_email_address">Your Email</label>
-        <input type="text" id="reporters_email_address" name="reporters_email_address"/>
+        <input type="text" id="reporters_email_address" name="reporters_email_address" value="howlowck@gmail.com"/>
     </div>
     <div class="field">
         <label for="date_of_incident">Date of Incident</label>
-        <input type="date" id="date_of_incident" name="date_of_incident"/>
+        <input type="date" id="date_of_incident" name="date_of_incident" value="2014-09-12"/>
     </div>
     <div class="field">
         <label for="time_of_incident">Time of Incident</label>
-        <input type="time" id="time_of_incident" name="date_of_incident"/>
+        <input type="time" id="time_of_incident" name="time_of_incident" value="21:58"/>
+    </div>
+    <div class="field">
+        <label for="location_of_incident">Location</label>
+        <input type="text" id="location_of_incident" name="location_of_incident" value="Sargent"/>
     </div>
     <div class="field">
         <label for="location_of_incident_specific">Location</label>
-        <input type="text" id="location_of_incident_specific" name="location_of_incident_specific"/>
+        <input type="text" id="location_of_incident_specific" name="location_of_incident_specific" value="42.053790,-87.675555"/>
+    </div>
+    <div class="field">
+        <label for="location_of_origin_specific">Origin Location</label>
+        <input type="text" id="location_of_origin_specific" name="location_of_origin_specific" value="42.053720,-87.675515"/>
     </div>
     <h2>Incident Details</h2>
     <div class="field">
         <label for="person">Person of Concern</label>
-        <input type="text" id="person" name="person[]" />
+        <input type="text" id="person" name="person[]" value="Joe Bob"/>
     </div>
     <div class="field">
         <label for="role">Role</label>
-        <select name="role[]" id="role">
+        <select multiple name="role[]" id="role">
             <option value="Subject of Concern">Subject of Concern</option>
-            <option value="Victim/Target">Victim/Target</option>
-            <option value="Witness">Witness</option>
+            <option selected value="Victim/Target">Victim/Target</option>
+            <option selected value="Witness">Witness</option>
             <option value="Other">Other</option>
         </select>
     </div>
@@ -43,11 +55,11 @@
         <a class="button round small"><i class="icon-plus3"></i></a>
         <input type="checkbox" name="aq[1][answer][]" value="Academic">
         <input type="checkbox" name="aq[1][answer][]" value="Behavior/Misconduct">
-        <input type="checkbox" name="aq[1][answer][]" value="Classroom Disruption">
+        <input type="checkbox" checked name="aq[1][answer][]" value="Classroom Disruption">
         <input type="checkbox" name="aq[1][answer][]" value="Eating Disorder/Body Image">
         <input type="checkbox" name="aq[1][answer][]" value="Economic/Financial">
         <input type="checkbox" name="aq[1][answer][]" value="Family Issues">
-        <input type="checkbox" name="aq[1][answer][]" value="Harassment/Stalking">
+        <input type="checkbox" checked name="aq[1][answer][]" value="Harassment/Stalking">
         <input type="checkbox" name="aq[1][answer][]" value="Hazing">
         <input type="checkbox" name="aq[1][answer][]" value="Health/Illness/Injury">
         <input type="checkbox" name="aq[1][answer][]" value="Housing">
@@ -66,7 +78,7 @@
 
     <div class="field textarea">
         <label for="aq[2][answer]">Description of Concern/Issue</label>
-        <textarea id="aq[2][answer]" name="aq[2][answer]"></textarea>
+        <textarea id="aq[2][answer]" name="aq[2][answer]">This is where I have a lot of descriptions!!!</textarea>
     </div>
     <h2>Take a Photo</h2>
     <div class="field file">

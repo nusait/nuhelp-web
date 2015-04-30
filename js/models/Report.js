@@ -1,10 +1,10 @@
-var Model = require('Model');
+var State = require('ampersand-state');
 
-var Report = function (data) {
+var Report = State.extend({
+    props: {
 
-};
+    }
+});
 
-Report.prototype = Object.create(Model.prototype);
-
-Report.prototype.constrctor = Report;
+model.exports = Report;
 

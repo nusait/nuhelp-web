@@ -18,23 +18,34 @@
   "bugs": {
     "url": "https://github.com/nusait/nuhelp-api/issues"
   },
-  "browser" : {
-      "start": "./js/support/start.js",
-      "Config": "./js/support/Config.js",
-      "Helper": "./js/support/Helper.js",
-      "Env": "./js/support/Env.js",
-      "Auth" : "./js/modules/Auth.js",
-      "Navigation" : "./js/modules/Navigation.js",
-      "Model": "./js/models/Model.js",
-      "Report": "./js/models/Report.js",
-      "View": "./js/views/View.js",
-      "ReportListView": "./js/views/ReportListView.js",
-      "report-list-template": "./js/templates/report-list.hbs",
-      "ReportDetailedView": "./js/views/ReportDetailedView.js",
-      "ReportCreationView": "./js/views/ReportCreationView.js",
-      "report-creation-template": "./js/templates/report-creation.hbs",
-      "LoginView": "./js/views/LoginView.js",
-      "login-template": "./js/templates/login.hbs"
+  "browser": {
+    "start": "./js/support/start.js",
+    "Config": "./js/support/Config.js",
+    "Helper": "./js/support/Helper.js",
+    "Env": "./js/support/Env.js",
+    "Auth": "./js/modules/Auth.js",
+    "Authority": "./js/modules/Authority.js",
+    "Navigation": "./js/modules/Navigation.js",
+    "Session": "./js/modules/Session.js",
+    "Report": "./js/models/Report.js",
+    "User": "./js/models/User.js",
+    "View": "./js/views/View.js",
+    "Container": "./js/support/Container.js",
+    "ReportListView": "./js/views/ReportListView.js",
+    "report-list-template": "./js/templates/report-list.hbs",
+    "ReportDetailedView": "./js/views/ReportDetailedView.js",
+    "report-detailed-template": "./js/templates/report-detailed.hbs",
+    "ReportCreationView": "./js/views/ReportCreationView.js",
+    "report-creation-template": "./js/templates/report-creation.hbs",
+    "LoginView": "./js/views/LoginView.js",
+    "login-template": "./js/templates/login.hbs",
+    "MainNavigationView": "./js/views/MainNavigationView.js",
+    "mainnav-template": "./js/templates/mainnav.hbs",
+    "mainnav-greeting": "./js/templates/partials/mainnav-greeting.hbs",
+    "notify-map-template": "./js/templates/notify-map.hbs",
+    "notify-list-template": "./js/templates/notify-list.hbs",
+    "NotifyMapView": "./js/views/NotifyMapView.js",
+    "NotifyListView": "./js/views/NotifyListView.js"
   },
   "browserify": {
     "transform": [
@@ -59,6 +70,15 @@
     "handlebars": "^1.3.0"
   },
   "dependencies": {
-    "mapbox.js": "^2.0.1"
+    "mapbox.js": "^2.0.1",
+    "moment": "^2.10.2",
+    "whatwg-fetch": "^0.7.0",
+    "es6-promise": "^2.0.1",
+    "eventemitter2": "^0.4.14",
+    "socket.io-client": "^1.3.5",
+    "ampersand-state": "^4.5.4",
+    "ampersand-dom-bindings": "^3.5.0",
+    "ampersand-collection": "^1.4.5",
+    "lodash": "^3.7.0"
   }
 }

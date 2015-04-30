@@ -34,6 +34,10 @@ gulp.task('sass', function () {
 gulp.task('browserify', function () {
     return browserify('./js/index.js')
         .bundle()
+        .on('error', function (error) {
+            util.log('error', util.colors.red(error.message));
+            this.emit('end');
+        })
         .pipe(source('index.js'))
         .pipe(gulp.dest('./built'));
 });

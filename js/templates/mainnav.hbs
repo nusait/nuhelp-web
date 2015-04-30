@@ -1,0 +1,15 @@
+<div id="topnav">
+    <span class="title">NuHelp Admin</span>
+    <nav>
+        {{#if user}}
+            <span class="greeting"></span>
+            <a class="logout" href="">Log out</a>
+            <a class="login hidden" href="">Login</a>
+        {{else}}
+            <span class="greeting hidden"></span>
+            <a class="logout hidden" href="">Log out</a>
+            <a class="login" href="">Login</a>
+        {{/if}}
+
+    </nav>
+</div>

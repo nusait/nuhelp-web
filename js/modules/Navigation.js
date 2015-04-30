@@ -9,10 +9,11 @@ function bindNavigationEvents() {
         evt.preventDefault();
 
         var target = evt.target;
+        var Auth = App.make('auth');
         if(hasClass(target, 'logout')) {
             var logout = Auth.logout();
-            logout.then(function (request) {
-                return console.log(request.responseText);
+            logout.then(function (response) {
+                return console.log(response.headers);
             });
         }
     });
