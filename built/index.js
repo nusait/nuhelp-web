@@ -7,7 +7,6 @@ var Container = require('Container');
 var Mapbox = require('mapbox.js');
 var Auth = require('Auth');
 var Authority = require('Authority');
-var Navigation = require('Navigation');
 var MainNavigationView = require('MainNavigationView');
 var Helper = require('Helper');
 var ReportListView = require('ReportListView');
@@ -15,10 +14,12 @@ var ReportCreationView = require('ReportCreationView');
 var LoginView = require('LoginView');
 var User = require('User');
 var Session = require('Session');
+var moment = require('moment');
+var EnvVar = require('EnvVar');
 var EventEmitter2 = require('eventemitter2').EventEmitter2;
 var NotifyMapView = require('NotifyMapView');
 
-var ioClient = require('socket.io-client')('http://pusher.node:5005/nuhelp');
+var ioClient = require('socket.io-client')(EnvVar.node_socket_url);
 
 (function (global) {
 
@@ -52,6 +53,16 @@ var ioClient = require('socket.io-client')('http://pusher.node:5005/nuhelp');
 
     ioClient.on('notification:newLocation', function (data) {
         console.log('new location', data);
+        Helper.ajax('get', Helper.url('notifications/' + data.notification_id + '/locations/latest')).then(function (json) {
+            var lat = json.lat;
+            var long = json.long;
+            var latLong = L.latLng(lat, long);
+            line.addLatLng(latLong);
+            var date = moment(new Date(json.recorded_at));
+            var timeStr = date.format('MM/DD/YY h:mm:ss a');
+            var popup = L.popup().setContent('<p>Recorded At: ' + timeStr + ' </p>');
+            L.circleMarker(latLong).setRadius(6).addTo(map.mapInstance).bindPopup(popup);
+        })
     });
 
     ioClient.on('notification:expired', function (data) {
@@ -78,16 +89,19 @@ var ioClient = require('socket.io-client')('http://pusher.node:5005/nuhelp');
     });
 
     map = new NotifyMapView();
-
+    var line;
     Helper.ajax('get', Helper.url('notifications/1', {include: 'locations'})).then(function (json) {
        var locations = json.locations;
         var latLongs = [];
         _.each(locations, function (loc) {
             var latlng = L.latLng(loc.lat, loc.long);
             latLongs.push(latlng);
-            L.circle(latlng, 4).addTo(map.mapInstance);
+            var date = moment(new Date(loc.recorded_at));
+            var timeStr = date.format('MM/DD/YY h:mm:ss a');
+            var popup = L.popup().setContent('<p>Recorded At: ' + timeStr + ' </p>');
+            L.circleMarker(latlng).setRadius(6).addTo(map.mapInstance).bindPopup(popup);
         });
-        L.polyline(latLongs, {color: 'green'}).addTo(map.mapInstance);
+        line = L.polyline(latLongs, {color: 'green'}).addTo(map.mapInstance);
     });
 
 //listView = new ReportListView([{},{},{}]);
@@ -122,7 +136,13 @@ var ioClient = require('socket.io-client')('http://pusher.node:5005/nuhelp');
 //});
 
 })(window);
-},{"Auth":3,"Authority":4,"Container":8,"Helper":10,"LoginView":18,"MainNavigationView":19,"Navigation":5,"NotifyMapView":20,"ReportCreationView":21,"ReportListView":22,"Session":6,"User":2,"eventemitter2":119,"lodash":128,"mapbox.js":143,"socket.io-client":159,"start":11,"whatwg-fetch":212}],2:[function(require,module,exports){
+},{"Auth":4,"Authority":5,"Container":8,"EnvVar":2,"Helper":10,"LoginView":18,"MainNavigationView":19,"NotifyMapView":20,"ReportCreationView":21,"ReportListView":22,"Session":6,"User":3,"eventemitter2":119,"lodash":128,"mapbox.js":143,"moment":158,"socket.io-client":159,"start":11,"whatwg-fetch":212}],2:[function(require,module,exports){
+module.exports={
+  "mapbox_token": "pk.eyJ1IjoibnVzYWl0d2ViIiwiYSI6Ik9oZWI0UnMifQ.JiRCR-KqeIJFsAE2sKOyDA",
+  "node_socket_url": "http://pusher.node:5005/nuhelp"
+}
+
+},{}],3:[function(require,module,exports){
 //var Model = require('Model');
 var State = require('ampersand-state');
 var Helper = require('Helper');
@@ -144,7 +164,7 @@ var User = State.extend({
 
 
 module.exports = User;
-},{"Helper":10,"ampersand-state":24,"lodash":128}],3:[function(require,module,exports){
+},{"Helper":10,"ampersand-state":24,"lodash":128}],4:[function(require,module,exports){
 var Helper = require('Helper');
 var Session = require('Session');
 var User = require('User');
@@ -225,7 +245,7 @@ Auth.prototype = {
 };
 
 module.exports = Auth;
-},{"Helper":10,"Session":6,"User":2}],4:[function(require,module,exports){
+},{"Helper":10,"Session":6,"User":3}],5:[function(require,module,exports){
 var Helper = require('Helper');
 var _  = require('lodash');
 
@@ -275,34 +295,7 @@ Authority.prototype = {
 };
 
 module.exports = Authority;
-},{"Helper":10,"lodash":128}],5:[function(require,module,exports){
-var Helpers = require('Helper');
-var Auth = require('Auth');
-
-var q = Helpers.queryOne;
-var hasClass=Helpers.hasClass;
-
-function bindNavigationEvents() {
-    q('#topnav').addEventListener('click', function (evt) {
-        evt.preventDefault();
-
-        var target = evt.target;
-        var Auth = App.make('auth');
-        if(hasClass(target, 'logout')) {
-            var logout = Auth.logout();
-            logout.then(function (response) {
-                return console.log(response.headers);
-            });
-        }
-    });
-}
-
-var Navigation = {
-    bindNavigationEvents: bindNavigationEvents
-};
-
-module.exports = Navigation;
-},{"Auth":3,"Helper":10}],6:[function(require,module,exports){
+},{"Helper":10,"lodash":128}],6:[function(require,module,exports){
 var Helper = require('Helper');
 var moment = require('moment');
 
@@ -864,7 +857,7 @@ var proto = {
 Helper.mixin(LoginView.prototype, proto);
 
 module.exports = LoginView;
-},{"Auth":3,"Helper":10,"View":23,"login-template":12}],19:[function(require,module,exports){
+},{"Auth":4,"Helper":10,"View":23,"login-template":12}],19:[function(require,module,exports){
 var Auth = require('Auth');
 var View = require('View');
 var Helper = require('Helper');
@@ -933,12 +926,13 @@ var proto = {
 Helper.mixin(MainNavigationView.prototype, proto);
 
 module.exports = MainNavigationView;
-},{"Auth":3,"Helper":10,"View":23,"mainnav-greeting":15,"mainnav-template":13}],20:[function(require,module,exports){
+},{"Auth":4,"Helper":10,"View":23,"mainnav-greeting":15,"mainnav-template":13}],20:[function(require,module,exports){
 var View = require('View');
 var Helper = require('Helper');
 var mapTemp = require('notify-map-template');
 var Config = require('Config');
 var Mapbox = require('mapbox.js');
+var EnvVar = require('EnvVar');
 
 function bindViewEvents() {
     //this.events.on('notifyAddedToList', function () {
@@ -969,7 +963,7 @@ function bindDomEvents() {
 }
 
 function NotifyMapView() {
-    L.mapbox.accessToken = Config.mapToken;
+    L.mapbox.accessToken = EnvVar.mapbox_token;
     var map = L.mapbox.map('notify-map-view-container', 'examples.map-i86nkdio')
         .setView([42.054566, -87.675615], 16);
     this.mapInstance = map;
@@ -989,7 +983,7 @@ Helper.mixin(NotifyMapView.prototype, proto);
 
 module.exports = NotifyMapView;
 
-},{"Config":7,"Helper":10,"View":23,"mapbox.js":143,"notify-map-template":14}],21:[function(require,module,exports){
+},{"Config":7,"EnvVar":2,"Helper":10,"View":23,"mapbox.js":143,"notify-map-template":14}],21:[function(require,module,exports){
 var View = require('View');
 var Helper = require('Helper');
 var ReportCreationTemp = require('report-creation-template');

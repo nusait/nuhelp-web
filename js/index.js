@@ -6,7 +6,6 @@ var Container = require('Container');
 var Mapbox = require('mapbox.js');
 var Auth = require('Auth');
 var Authority = require('Authority');
-var Navigation = require('Navigation');
 var MainNavigationView = require('MainNavigationView');
 var Helper = require('Helper');
 var ReportListView = require('ReportListView');
@@ -14,10 +13,12 @@ var ReportCreationView = require('ReportCreationView');
 var LoginView = require('LoginView');
 var User = require('User');
 var Session = require('Session');
+var moment = require('moment');
+var EnvVar = require('EnvVar');
 var EventEmitter2 = require('eventemitter2').EventEmitter2;
 var NotifyMapView = require('NotifyMapView');
 
-var ioClient = require('socket.io-client')('http://pusher.node:5005/nuhelp');
+var ioClient = require('socket.io-client')(EnvVar.node_socket_url);
 
 (function (global) {
 
@@ -51,6 +52,16 @@ var ioClient = require('socket.io-client')('http://pusher.node:5005/nuhelp');
 
     ioClient.on('notification:newLocation', function (data) {
         console.log('new location', data);
+        Helper.ajax('get', Helper.url('notifications/' + data.notification_id + '/locations/latest')).then(function (json) {
+            var lat = json.lat;
+            var long = json.long;
+            var latLong = L.latLng(lat, long);
+            line.addLatLng(latLong);
+            var date = moment(new Date(json.recorded_at));
+            var timeStr = date.format('MM/DD/YY h:mm:ss a');
+            var popup = L.popup().setContent('<p>Recorded At: ' + timeStr + ' </p>');
+            L.circleMarker(latLong).setRadius(6).addTo(map.mapInstance).bindPopup(popup);
+        })
     });
 
     ioClient.on('notification:expired', function (data) {
@@ -77,16 +88,19 @@ var ioClient = require('socket.io-client')('http://pusher.node:5005/nuhelp');
     });
 
     map = new NotifyMapView();
-
+    var line;
     Helper.ajax('get', Helper.url('notifications/1', {include: 'locations'})).then(function (json) {
        var locations = json.locations;
         var latLongs = [];
         _.each(locations, function (loc) {
             var latlng = L.latLng(loc.lat, loc.long);
             latLongs.push(latlng);
-            L.circle(latlng, 4).addTo(map.mapInstance);
+            var date = moment(new Date(loc.recorded_at));
+            var timeStr = date.format('MM/DD/YY h:mm:ss a');
+            var popup = L.popup().setContent('<p>Recorded At: ' + timeStr + ' </p>');
+            L.circleMarker(latlng).setRadius(6).addTo(map.mapInstance).bindPopup(popup);
         });
-        L.polyline(latLongs, {color: 'green'}).addTo(map.mapInstance);
+        line = L.polyline(latLongs, {color: 'green'}).addTo(map.mapInstance);
     });
 
 //listView = new ReportListView([{},{},{}]);

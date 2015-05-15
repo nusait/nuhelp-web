@@ -3,6 +3,7 @@ var Helper = require('Helper');
 var mapTemp = require('notify-map-template');
 var Config = require('Config');
 var Mapbox = require('mapbox.js');
+var EnvVar = require('EnvVar');
 
 function bindViewEvents() {
     //this.events.on('notifyAddedToList', function () {
@@ -33,7 +34,7 @@ function bindDomEvents() {
 }
 
 function NotifyMapView() {
-    L.mapbox.accessToken = Config.mapToken;
+    L.mapbox.accessToken = EnvVar.mapbox_token;
     var map = L.mapbox.map('notify-map-view-container', 'examples.map-i86nkdio')
         .setView([42.054566, -87.675615], 16);
     this.mapInstance = map;

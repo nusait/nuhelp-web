@@ -45,7 +45,8 @@
     "notify-map-template": "./js/templates/notify-map.hbs",
     "notify-list-template": "./js/templates/notify-list.hbs",
     "NotifyMapView": "./js/views/NotifyMapView.js",
-    "NotifyListView": "./js/views/NotifyListView.js"
+    "NotifyListView": "./js/views/NotifyListView.js",
+    "EnvVar": "./.env.json"
   },
   "browserify": {
     "transform": [
