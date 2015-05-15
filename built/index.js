@@ -139,7 +139,7 @@ var ioClient = require('socket.io-client')(EnvVar.node_socket_url);
 },{"Auth":4,"Authority":5,"Container":8,"EnvVar":2,"Helper":10,"LoginView":18,"MainNavigationView":19,"NotifyMapView":20,"ReportCreationView":21,"ReportListView":22,"Session":6,"User":3,"eventemitter2":119,"lodash":128,"mapbox.js":143,"moment":158,"socket.io-client":159,"start":11,"whatwg-fetch":212}],2:[function(require,module,exports){
 module.exports={
   "mapbox_token": "pk.eyJ1IjoibnVzYWl0d2ViIiwiYSI6Ik9oZWI0UnMifQ.JiRCR-KqeIJFsAE2sKOyDA",
-  "node_socket_url": "http://pusher.node:5005/nuhelp"
+  "node_socket_url": "https://node.dosa.northwestern.edu:5005/nuhelp"
 }
 
 },{}],3:[function(require,module,exports){

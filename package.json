@@ -2,7 +2,7 @@
   "name": "nuhelp-api",
   "version": "0.0.0",
   "description": "Nuhelp API and Admin Dashboard",
-  "main": "html/built/index.js",
+  "main": "built/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
