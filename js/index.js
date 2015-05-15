@@ -8,6 +8,8 @@ var Auth = require('Auth');
 var Authority = require('Authority');
 var MainNavigationView = require('MainNavigationView');
 var Helper = require('Helper');
+var Config = require('Config');
+var Env = require('Env');
 var ReportListView = require('ReportListView');
 var ReportCreationView = require('ReportCreationView');
 var LoginView = require('LoginView');
@@ -18,7 +20,7 @@ var EnvVar = require('EnvVar');
 var EventEmitter2 = require('eventemitter2').EventEmitter2;
 var NotifyMapView = require('NotifyMapView');
 
-var ioClient = require('socket.io-client')(EnvVar.node_socket_url);
+var ioClient = require('socket.io-client')(Config.nodeUrl[Env.getEnvironment()]);
 
 (function (global) {
 

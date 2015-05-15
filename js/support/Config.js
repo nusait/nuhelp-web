@@ -4,7 +4,11 @@ var Config = {
         '//test.dosa.northwestern.edu/nuhelpapi',
         '//go.dosa.northwestern.edu/nuhelpapi'
     ],
-    mapToken: 'pk.eyJ1IjoibnVzYWl0d2ViIiwiYSI6Im9VaWxFZm8ifQ.ZNSWMROfH4UFrkd85wWDbg'
+    nodeUrl: [
+        'http://pusher.node:5005/nuhelp',
+        'https://node.dosa.northwestern.edu:5005/nuhelp',
+        'https://node.dosa.northwestern.edu:5005/nuhelp'
+    ]
 };
 
 module.exports = Config;

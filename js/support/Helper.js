@@ -87,7 +87,7 @@ function url(resource, queryObj , secure) {
         secure = envSecured();
     }
     var base = baseUrl(secure);
-    var url = base + '/api/' + resource + '/';
+    var url = base + '/api/' + resource;
 
     if (typeof queryObj === 'object') {
         return url + '?' + serializeQuery(queryObj);
@@ -135,8 +135,13 @@ function makeAjaxPromise(type, path, data, addHeader) {
         };
 
     var dataString = JSON.stringify(data);
+    if (data && data.hasOwnProperty("password"))
+    {
+        data.password = '[**********]';
+    }
+    var filteredData = JSON.stringify(data);
 
-    console.log('sending a ' + type + ' to ' + path + ' with ' + dataString);
+    console.log('sending a ' + type + ' to ' + path + ' with ' + filteredData);
 
     if (!! Session.user()) {
         var user = Session.user();

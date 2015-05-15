@@ -9,6 +9,8 @@ var Auth = require('Auth');
 var Authority = require('Authority');
 var MainNavigationView = require('MainNavigationView');
 var Helper = require('Helper');
+var Config = require('Config');
+var Env = require('Env');
 var ReportListView = require('ReportListView');
 var ReportCreationView = require('ReportCreationView');
 var LoginView = require('LoginView');
@@ -19,7 +21,7 @@ var EnvVar = require('EnvVar');
 var EventEmitter2 = require('eventemitter2').EventEmitter2;
 var NotifyMapView = require('NotifyMapView');
 
-var ioClient = require('socket.io-client')(EnvVar.node_socket_url);
+var ioClient = require('socket.io-client')(Config.nodeUrl[Env.getEnvironment()]);
 
 (function (global) {
 
@@ -136,10 +138,9 @@ var ioClient = require('socket.io-client')(EnvVar.node_socket_url);
 //});
 
 })(window);
-},{"Auth":4,"Authority":5,"Container":8,"EnvVar":2,"Helper":10,"LoginView":18,"MainNavigationView":19,"NotifyMapView":20,"ReportCreationView":21,"ReportListView":22,"Session":6,"User":3,"eventemitter2":119,"lodash":128,"mapbox.js":143,"moment":158,"socket.io-client":159,"start":11,"whatwg-fetch":212}],2:[function(require,module,exports){
+},{"Auth":4,"Authority":5,"Config":7,"Container":8,"Env":9,"EnvVar":2,"Helper":10,"LoginView":18,"MainNavigationView":19,"NotifyMapView":20,"ReportCreationView":21,"ReportListView":22,"Session":6,"User":3,"eventemitter2":119,"lodash":128,"mapbox.js":143,"moment":158,"socket.io-client":159,"start":11,"whatwg-fetch":212}],2:[function(require,module,exports){
 module.exports={
   "mapbox_token": "pk.eyJ1IjoibnVzYWl0d2ViIiwiYSI6Ik9oZWI0UnMifQ.JiRCR-KqeIJFsAE2sKOyDA",
-  "node_socket_url": "https://node.dosa.northwestern.edu:5005/nuhelp"
 }
 
 },{}],3:[function(require,module,exports){
@@ -338,7 +339,11 @@ var Config = {
         '//test.dosa.northwestern.edu/nuhelpapi',
         '//go.dosa.northwestern.edu/nuhelpapi'
     ],
-    mapToken: 'pk.eyJ1IjoibnVzYWl0d2ViIiwiYSI6Im9VaWxFZm8ifQ.ZNSWMROfH4UFrkd85wWDbg'
+    nodeUrl: [
+        'http://pusher.node:5005/nuhelp',
+        'https://node.dosa.northwestern.edu:5005/nuhelp',
+        'https://node.dosa.northwestern.edu:5005/nuhelp'
+    ]
 };
 
 module.exports = Config;
@@ -524,7 +529,7 @@ function url(resource, queryObj , secure) {
         secure = envSecured();
     }
     var base = baseUrl(secure);
-    var url = base + '/api/' + resource + '/';
+    var url = base + '/api/' + resource;
 
     if (typeof queryObj === 'object') {
         return url + '?' + serializeQuery(queryObj);
@@ -572,8 +577,13 @@ function makeAjaxPromise(type, path, data, addHeader) {
         };
 
     var dataString = JSON.stringify(data);
+    if (data && data.hasOwnProperty("password"))
+    {
+        data.password = '[**********]';
+    }
+    var filteredData = JSON.stringify(data);
 
-    console.log('sending a ' + type + ' to ' + path + ' with ' + dataString);
+    console.log('sending a ' + type + ' to ' + path + ' with ' + filteredData);
 
     if (!! Session.user()) {
         var user = Session.user();
