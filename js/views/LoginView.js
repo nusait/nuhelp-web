@@ -34,7 +34,7 @@ function bindDomEvents() {
     });
 }
 
-function LoginView(container) {
+function LoginView() {
     this.Auth = App.make('auth');
     View.call(this);
 }

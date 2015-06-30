@@ -12,7 +12,8 @@ var User = State.extend({
         first_name: 'string',
         last_name: 'string',
         email: 'string',
-        netid: 'string'
+        netid: 'string',
+        phone: 'string'
     }
 });
 

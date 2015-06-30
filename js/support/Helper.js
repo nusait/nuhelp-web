@@ -1,16 +1,23 @@
 var Config = require('Config');
 var Env = require('Env');
 var Session = require('Session');
+var _ = require('lodash');
 
 function hasClass(node, className) {
    return node.classList.contains(className);
 }
 
-function mixin(target, mixin) {
-    Object.keys(mixin).forEach(function(prop) {
-        target[prop] = mixin[prop];
-    });
-    return target;
+//function mixin(target, mixin) {
+//    Object.keys(mixin).forEach(function(prop) {
+//        target[prop] = mixin[prop];
+//    });
+//    return target;
+//}
+
+function parseHTML(str) {
+    var tmp = document.implementation.createHTMLDocument('New Doc');
+    tmp.body.innerHTML = str;
+    return tmp.body.children[0];
 }
 
 function queryOne(selector) {
@@ -126,6 +133,7 @@ function queryString() {
  * @param type
  * @param path
  * @param data
+ * @param addHeader
  * @returns {Promise}
  */
 function makeAjaxPromise(type, path, data, addHeader) {
@@ -161,57 +169,17 @@ function makeAjaxPromise(type, path, data, addHeader) {
         return response.json();
     });
 
-    //var promise = new Promise(function (resolve, reject) {
-    //    var request = new XMLHttpRequest();
-    //
-    //    request.open(type, path, true);
-    //
-    //    var user = Session.user();
-    //    if ( !! user) {
-    //        request.setRequestHeader('NU-NetId', user.netid);
-    //        request.setRequestHeader('NuHelp-User-Token', user.token);
-    //        console.log(user);
-    //    }
-    //
-    //    request.onload = function () {
-    //            resolve(request);
-    //    };
-    //
-    //    request.onerror = function (err) {
-    //        reject(err);
-    //    };
-    //
-    //    request.ontimeout = function (err) {
-    //        console.log(err);
-    //        var error = new Error('timeout');
-    //        reject(error);
-    //    };
-    //
-    //    request.timeout = 10000;
-    //
-    //    if (data instanceof FormData) {
-    //        request.send(data);
-    //    } else if (data instanceof Object) {
-    //        var formData = new FormData();
-    //        Object.keys(data).forEach(function(prop) {
-    //            formData.append(prop, data[prop]);
-    //        });
-    //        request.send(formData);
-    //    } else {
-    //        request.send();
-    //    }
-    //    console.log('sent ' + type + ' request to: ' + path);
-    //});
 }
 
 var Helper = {
     queryOne: queryOne,
     queryAll: queryAll,
     hasClass: hasClass,
-    mixin: mixin,
+    mixin: _.assign,
     is: isElementThisSelector,
     has: isElementChildOfParent,
     url: url,
+    parseHTML: parseHTML,
     queryString: queryString,
     findParent: findParentWithSelector,
     ajax: makeAjaxPromise

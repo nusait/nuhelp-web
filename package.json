@@ -20,8 +20,11 @@
   },
   "browser": {
     "start": "./js/support/start.js",
+    "closestPolyfill": "./js/support/closest.js",
+    "datasetPolyfill": "./js/support/dataset.js",
     "Config": "./js/support/Config.js",
     "Helper": "./js/support/Helper.js",
+    "Delegate": "./js/support/Delegate.js",
     "Env": "./js/support/Env.js",
     "Auth": "./js/modules/Auth.js",
     "Authority": "./js/modules/Authority.js",
@@ -44,8 +47,12 @@
     "mainnav-greeting": "./js/templates/partials/mainnav-greeting.hbs",
     "notify-map-template": "./js/templates/notify-map.hbs",
     "notify-list-template": "./js/templates/notify-list.hbs",
+    "notify-list-item-template": "./js/templates/notify-list-item.hbs",
+    "Notify": "./js/models/Notify.js",
+    "NotifyCollection": "./js/collections/NotifyCollection.js",
     "NotifyMapView": "./js/views/NotifyMapView.js",
     "NotifyListView": "./js/views/NotifyListView.js",
+    "NotifyListItemView": "./js/views/NotifyListItemView.js",
     "EnvVar": "./.env.json"
   },
   "browserify": {
@@ -80,6 +87,8 @@
     "ampersand-state": "^4.5.4",
     "ampersand-dom-bindings": "^3.5.0",
     "ampersand-collection": "^1.4.5",
-    "lodash": "^3.7.0"
+    "lodash": "^3.7.0",
+    "ampersand-view": "^7.4.1",
+    "ampersand-collection-view": "^1.4.0"
   }
 }

@@ -1,5 +1,6 @@
 require('whatwg-fetch');
 require('start');
+require('closestPolyfill');
 
 var _ = require('lodash');
 var Container = require('Container');
@@ -19,6 +20,10 @@ var moment = require('moment');
 var EnvVar = require('EnvVar');
 var EventEmitter2 = require('eventemitter2').EventEmitter2;
 var NotifyMapView = require('NotifyMapView');
+var NotifyCollection = require('NotifyCollection');
+var NotifyListItemView = require('NotifyListItemView');
+var NotifyListItemTemp = require('notify-list-item-template');
+var CollectionView = require('NotifyListView');
 
 var ioClient = require('socket.io-client')(Config.nodeUrl[Env.getEnvironment()]);
 
@@ -26,9 +31,17 @@ var ioClient = require('socket.io-client')(Config.nodeUrl[Env.getEnvironment()])
 
     global.App = new Container();
 
+    // TEMP STUFF!!! //
+    //global.notifications = new NotifyCollection(requests.notifications);
+    //
+    //var container = document.querySelector('ul.notifications');
+    //
+    //notifications.forEach(function (Notify) {
+    //    var el = Helper.parseHTML(NotifyListItemTemp(Notify));
+    //    container.appendChild(el);
+    //});
 
-
-    person = new User({first_name: 'Hao', last_name: 'Luo'});
+    //END OF TEMP STUFF!! //
 
     var events = new EventEmitter2({
         wildcard: true
@@ -36,16 +49,10 @@ var ioClient = require('socket.io-client')(Config.nodeUrl[Env.getEnvironment()])
     App.instance('events', events);
     App.instance('auth', new Auth());
     App.instance('authority', new Authority());
-    App.instance('mainnav', new MainNavigationView());
     App.instance('login', new LoginView());
 
     ioClient.on('connect', function () {
         console.log('connected to socket!', ioClient.id);
-        //var request = Helper.ajax('get', Helper.url('generate/node-token', {key : ioClient.id}));
-        //request.then(function(json) {
-        //    var token = json.token;
-        //    console.log(token);
-        //});
     });
 
     ioClient.on('notification:new', function (data) {
@@ -58,6 +65,8 @@ var ioClient = require('socket.io-client')(Config.nodeUrl[Env.getEnvironment()])
             var lat = json.lat;
             var long = json.long;
             var latLong = L.latLng(lat, long);
+            var map = App.make('MapView');
+            var line = map.lines['notification-' + data.notification_id];
             line.addLatLng(latLong);
             var date = moment(new Date(json.recorded_at));
             var timeStr = date.format('MM/DD/YY h:mm:ss a');
@@ -74,66 +83,44 @@ var ioClient = require('socket.io-client')(Config.nodeUrl[Env.getEnvironment()])
         console.log('canceled', data);
     });
 
+    ioClient.on('notification:sent', function (data) {
+        console.log('sent', data);
+    });
+
     Promise.all([
         App.make('auth').start()
     ]).then(function() {
         App.make('authority').start();
     }).then(function () {
-        var mainnav = App.make('mainnav');
         var loginView = App.make('login');
         var auth = App.make('auth');
-        mainnav.render({user: auth.currentUser});
-
+        console.log('HEY LOOK AT MEE', auth.currentUser);
+        var mainnav = new MainNavigationView({model: auth.currentUser});
+        var map = new NotifyMapView();
+        App.instance('mainnav', mainnav);
+        mainnav.render();
+        App.instance('MapView', map);
         if(! auth.check()) {
             loginView.render();
         }
-    });
-
-    map = new NotifyMapView();
-    var line;
-    Helper.ajax('get', Helper.url('notifications/1', {include: 'locations'})).then(function (json) {
-       var locations = json.locations;
-        var latLongs = [];
-        _.each(locations, function (loc) {
-            var latlng = L.latLng(loc.lat, loc.long);
-            latLongs.push(latlng);
-            var date = moment(new Date(loc.recorded_at));
-            var timeStr = date.format('MM/DD/YY h:mm:ss a');
-            var popup = L.popup().setContent('<p>Recorded At: ' + timeStr + ' </p>');
-            L.circleMarker(latlng).setRadius(6).addTo(map.mapInstance).bindPopup(popup);
+    }).then(function () {
+        return fetchNotifications();
+    }).then(function (json) {
+        var collection = new NotifyCollection(json.notifications);
+        App.instance('notifications', collection);
+        var collectionView = new CollectionView({
+            el: document.querySelector('#notifications'),
+            collection: collection,
+            view: NotifyListItemView
         });
-        line = L.polyline(latLongs, {color: 'green'}).addTo(map.mapInstance);
+        App.instance('NotificationListView', collectionView);
+        collectionView.render();
+        console.log(collection);
     });
 
-//listView = new ReportListView([{},{},{}]);
-//listView.render();
+    function fetchNotifications () {
+        return Helper.ajax('get', Helper.url('notifications'))
+    }
 
-//listView.on('click', '.report-list-item', function (evt) {
-//    console.log(this.querySelector('.person').innerText);
-//});
-//
-//listView.on('click', '.report-list-item', function (evt) {
-//    console.log(this.querySelector('.role').innerText);
-//});
-
-//creationView = new ReportCreationView();
-//creationView.render();
-
-
-
-//user = new User();
-//user.fetchInfo();
-
-//session = Session;
-
-    //Helper.ajax('get', Helper.url('bluelights'))
-    //    .then(function (json) {
-    //        console.log(json);
-    //    });
-
-//var gettingBluelights = Helper.ajax('get', Helper.url('bluelights') + '?query=nearby&lat=42.059347&long=-87.675487');
-//gettingBluelights.then(function (request) {
-//    console.table(JSON.parse(request.responseText).features);
-//});
 
 })(window);

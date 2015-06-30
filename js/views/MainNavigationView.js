@@ -8,7 +8,6 @@ var q = Helper.queryOne;
 var hasClass=Helper.hasClass;
 
 function bindViewEvents() {
-    var Auth = App.make('auth');
     console.log('bound view event in mainnav');
     this.events.on('auth.userLoggedOut', function () {
         q('.logout').classList.add('hidden');
@@ -17,7 +16,6 @@ function bindViewEvents() {
     }.bind(this));
 
     this.events.on('auth.userLoggedIn', function (user) {
-        console.log(user);
         q('.logout').classList.remove('hidden');
         q('.login').classList.add('hidden');
         q('.greeting').classList.remove('hidden');
@@ -41,16 +39,17 @@ function addGreeting(user) {
     this.el.querySelector('.greeting').innerHTML = greetingPartial({user: user});
 }
 
-function MainNavigationView(container) {
-    View.call(this, container);
+function MainNavigationView(options) {
+    console.log('main nav', options);
+    View.call(this, options);
 }
 
 MainNavigationView.prototype = Object.create(View.prototype);
 
-function render(obj) {
-    View.prototype.render.call(this, obj);
-    if ( !! obj.user) {
-        this.addGreeting(obj.user);
+function render() {
+    View.prototype.render.call(this, this.model);
+    if ( !! this.model) {
+        this.addGreeting(this.model);
     }
 }
 

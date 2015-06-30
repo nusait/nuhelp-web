@@ -2,7 +2,7 @@ var Helper = require('Helper');
 var moment = require('moment');
 
 function getUserCred() {
-    if (typeof localStorage.userNetid == 'undefined' || typeof localStorage.userToken == 'undefined') {
+    if (typeof localStorage.userNetid === 'undefined' || typeof localStorage.userToken === 'undefined') {
         return null;
     }
 

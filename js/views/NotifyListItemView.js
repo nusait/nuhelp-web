@@ -1,54 +1,35 @@
 var Binding = require('ampersand-dom-bindings');
 var View = require('View');
 var Helper = require('Helper');
-var listTemp = require('notify-list-template');
+var listItemTemp = require('notify-list-item-template');
 
 function bindViewEvents() {
-    //var Auth = this.Auth;
-    //console.log('bound view event in login');
-    //this.events.on('auth.userLoggedIn', function () {
-    //    console.log('loggedin!!!!');
-    //    this.hide();
-    //}.bind(this));
-    //
-    //this.events.on('auth.userLoggedOut', function () {
-    //    if(this.rendered) {
-    //        return this.show();
-    //    }
-    //    return this.render();
-    //}.bind(this));
+    console.log('bound view event in ' + this.name);
+
 
 }
 
 function bindDomEvents() {
-    console.log('bound dom event in login');
-    this.on('submit', 'form', function (evt) {
-        //evt.preventDefault();
-        //console.log(evt);
-        //var netid = this.querySelector('#netid').value;
-        //var password = this.querySelector('#password').value;
-        //var login = App.make('auth').login(netid, password);
-        //login.then(function (json) {
-        //    //console.log(json);
-        //});
-    });
+    console.log('bound dom event in ' + this.name);
+    //this.on('click', '.notification', function () {
+    //    console.log(this);
+    //});
 }
 
-function NotifyListView(container) {
-    this.Auth = App.make('auth');
-    View.call(this);
+function NotifyListItemView(opts) {
+    View.call(this, opts);
 }
 
-NotifyListView.prototype = Object.create(View.prototype);
+NotifyListItemView.prototype = Object.create(View.prototype);
 
 var proto = {
-    name: 'loginView',
-    sel: '#login-view-container',
-    template: loginTemp,
+    name: 'notifyListItem',
+    sel: 'ul#notifications',
+    template: listItemTemp,
     bindViewEvents: bindViewEvents,
-    bindDomEvents: bindDomEvents
+    bindDomEvents: bindDomEvents,
 };
 
-Helper.mixin(NotifyListView.prototype, proto);
+Helper.mixin(NotifyListItemView.prototype, proto);
 
-module.exports = NotifyListView;
+module.exports = NotifyListItemView;

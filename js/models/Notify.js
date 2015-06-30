@@ -8,6 +8,8 @@ var Notify = State.extend({
         created_at: 'date',
         original_lat: 'number',
         original_long: 'number',
+        destination_lat: 'number',
+        destination_long: 'number',
         contact_name: 'string',
         contact_phone: 'string',
         remaining_time: 'number',
@@ -44,3 +46,5 @@ var Notify = State.extend({
         }
     }
 });
+
+module.exports = Notify;

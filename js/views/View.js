@@ -1,22 +1,38 @@
 var Helper = require('Helper');
-
+var Delegate = require('Delegate');
 var mixin = Helper.mixin;
 var qa = Helper.queryAll;
 var is = Helper.is;
+var _ = require('lodash');
 
-function View (node) {
+var defaultOpts = {
+    model: null,
+    collection: null
+};
+
+function View (opts) {
+    if (typeof opts === 'undefined') {
+        opts = {};
+    }
+    var options = _.defaults(opts, defaultOpts);
+    console.log(opts);
+    this.model = options.model;
+    this.collection = options.collection;
+
     this.events = App.make('events');
     this.elEventListeners = {};
-    this.el = document.querySelector(this.sel);
-    if (typeof node !== 'undefined') {
-        this.el = node;
-    }
+    this.parent = options.parent || document.querySelector(this.sel);
+
     this.bindViewEvents();
-    this.events.once('rendered.' + this.name, this.bindDomEvents.bind(this));
+    this.events.once('view.rendered.' + this.name, this.bindDomEvents.bind(this));
+    console.log(this.sel, this.parent);
     this.addFancyButtonEvent();
 }
 
 function addFancyButtonEvent() {
+    if (this.parent === null) {
+        return;
+    }
     this.on('mousedown', 'button', function (evt) {
         this.style.overflow = 'hidden';
         var prevCircle = this.querySelector('.ripple');
@@ -34,48 +50,11 @@ function addFancyButtonEvent() {
     });
 }
 
-function createDelegateEventListener(eventName) {
-    this.el.addEventListener(eventName, function (evt) {
-        var eventArray = this.elEventListeners[eventName];
-        for (var selector in eventArray) {
-            var el = Helper.findParent(evt.target, selector, this.el);
-            if ( !! el) {
-                eventArray[selector].forEach(function (callback) {
-                    callback.call(el, evt);
-                });
-            }
-        }
-    }.bind(this));
-}
-
-function addDelegateEvent(event, selector, callback) {
-    if (typeof this.elEventListeners[event] === 'undefined') {
-        this.elEventListeners[event] = {};
-        createDelegateEventListener.call(this, event);
-    }
-    var eventListeners = this.elEventListeners[event];
-    var selectorListenerArray = eventListeners[selector] || (eventListeners[selector] = []);
-    selectorListenerArray.push(callback);
-}
-
-function addDirectEvent(event, callback) {
-    this.el.addEventListener(event, callback);
-}
-
-function addEvent (event, funcOrSelector, func) {
-    var callback = func;
-    var selector = funcOrSelector;
-    if ( typeof funcOrSelector == 'function') {
-        callback = funcOrSelector;
-        addDirectEvent.call(this, event, callback);
-    } else {
-        addDelegateEvent.call(this, event, selector, callback);
-    }
-}
-
-function render(rendObj) {
-    this.el.innerHTML = this.template(rendObj);
-    this.events.emit('rendered.' + this.name, this);
+function render() {
+    var parent = this.parent.el || this.parent;
+    this.el = Helper.parseHTML(this.template(this.model));
+    parent.appendChild(this.el);
+    this.events.emit('view.rendered.' + this.name, this);
     this.rendered = true;
 }
 
@@ -95,14 +74,25 @@ function bindDomEvents() {
     throw new Error('You have to implement bindDomEvents on ' + this.name);
 }
 
+function remove() {
+    var parent = this.parent.el || this.parent;
+    if (parent) {
+        parent.removeChild(this.el);
+    }
+    this.events.emit('view.removed', this);
+}
+
 var proto = {
-    el: document.body,
+    parent: document.body,
+    el: null,
+    sel: null,
     elEventListeners: {}, //'input' : [func, func]
-    on: addEvent,
+    on: Delegate.on,
     rendered: false,
     render: render,
     show: show,
     hide: hide,
+    remove: remove,
     addFancyButtonEvent: addFancyButtonEvent,
     bindViewEvents: bindViewEvents,
     bindDomEvents: bindDomEvents

@@ -12,7 +12,7 @@ function setCurrentUser(json) {
 }
 
 function submitLogin(netid, password) {
-    return Helper.ajax('post', Helper.url('login'), {
+    return Helper.ajax('post', Helper.url('login', {role: 'admin'}), {
         netid: netid,
         password: password
     }).then(function (json) {
@@ -22,7 +22,9 @@ function submitLogin(netid, password) {
         return new Promise(function (resolve) {
             resolve(json);
         });
-    }.bind(this));
+    }.bind(this)).catch(function (error) {
+        console.log(error);
+    });
 }
 
 function submitLogout() {
