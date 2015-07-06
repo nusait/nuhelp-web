@@ -22,20 +22,36 @@ function NotifyMapView() {
     this.mapInstance = map;
 }
 
+function removeExistingNotifyLines() {
+    var map = this.mapInstance;
+    _.each(this.lines, function (layerGroup) {
+        map.removeLayer(layerGroup);
+    });
+}
+
 function drawNotifyLine(notify) {
-    Helper.ajax('get', Helper.url('notifications/' + notify.id, {include: 'locations'})).then(function (json) {
+    var drawLineFromJson = function (json) {
         var locations = json.locations;
         var latLongs = [];
+        var currentLine = L.layerGroup();
         _.each(locations, function (loc) {
             var latlng = L.latLng(loc.lat, loc.long);
             latLongs.push(latlng);
             var date = moment(new Date(loc.recorded_at));
             var timeStr = date.format('MM/DD/YY h:mm:ss a');
             var popup = L.popup().setContent('<p>Recorded At: ' + timeStr + ' </p>');
-            L.circleMarker(latlng).setRadius(6).addTo(this.mapInstance).bindPopup(popup);
+            var dot = L.circleMarker(latlng).setRadius(6).bindPopup(popup);
+            currentLine.addLayer(dot);
         }, this);
-        this.lines['notification-' + notify.id] = L.polyline(latLongs, {color: 'green'}).addTo(this.mapInstance);
-    }.bind(this));
+        var path = L.polyline(latLongs, {color: 'green'});
+        currentLine.addLayer(path);
+        this.lines['notification-' + notify.id] = currentLine;
+        currentLine.addTo(this.mapInstance);
+    }.bind(this);
+
+    Helper
+        .ajax('get', Helper.url('notifications/' + notify.id, {include: 'locations'}))
+        .then(drawLineFromJson);
 }
 
 NotifyMapView.prototype = Object.create(View.prototype);
@@ -47,7 +63,8 @@ var proto = {
     lines: {},
     bindViewEvents: bindViewEvents,
     bindDomEvents: bindDomEvents,
-    drawLine: drawNotifyLine
+    drawLine: drawNotifyLine,
+    removeAllExistingLines: removeExistingNotifyLines
 };
 
 Helper.mixin(NotifyMapView.prototype, proto);

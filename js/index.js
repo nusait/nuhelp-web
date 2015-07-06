@@ -104,7 +104,7 @@ var ioClient = require('socket.io-client')(Config.nodeUrl[Env.getEnvironment()])
             loginView.render();
         }
     }).then(function () {
-        return fetchNotifications();
+        return fetchExpiredNotifications();
     }).then(function (json) {
         var collection = new NotifyCollection(json.notifications);
         App.instance('notifications', collection);
@@ -118,8 +118,8 @@ var ioClient = require('socket.io-client')(Config.nodeUrl[Env.getEnvironment()])
         console.log(collection);
     });
 
-    function fetchNotifications () {
-        return Helper.ajax('get', Helper.url('notifications'))
+    function fetchExpiredNotifications () {
+        return Helper.ajax('get', Helper.url('notifications/expired'))
     }
 
 

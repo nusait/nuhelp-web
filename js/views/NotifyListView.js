@@ -7,9 +7,9 @@ function NotifyListView (opts) {
     var collection = this.collection;
     this.on('click', '.notification', function () {
         var id = this.dataset.id;
-        //console.log(collection.get(id));
         var map = App.make('MapView');
         console.log(map);
+        map.removeAllExistingLines();
         map.drawLine(collection.get(id));
     });
 }
