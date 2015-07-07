@@ -24,7 +24,7 @@ var NotifyCollection = require('NotifyCollection');
 var NotifyListItemView = require('NotifyListItemView');
 var NotifyListItemTemp = require('notify-list-item-template');
 var CollectionView = require('NotifyListView');
-
+var InspectActiveNotifyToggle = require('InspectActiveNotifyToggle');
 var ioClient = require('socket.io-client')(Config.nodeUrl[Env.getEnvironment()]);
 
 (function (global) {
@@ -94,7 +94,6 @@ var ioClient = require('socket.io-client')(Config.nodeUrl[Env.getEnvironment()])
     }).then(function () {
         var loginView = App.make('login');
         var auth = App.make('auth');
-        console.log('HEY LOOK AT MEE', auth.currentUser);
         var mainnav = new MainNavigationView({model: auth.currentUser});
         var map = new NotifyMapView();
         App.instance('mainnav', mainnav);
@@ -116,6 +115,11 @@ var ioClient = require('socket.io-client')(Config.nodeUrl[Env.getEnvironment()])
         App.instance('NotificationListView', collectionView);
         collectionView.render();
         console.log(collection);
+        var canInspect = App.make('authority').can('inspect','Notify');
+        var canViewActiveNotify = {canInspectActive: canInspect};
+        var activeToggle =  new InspectActiveNotifyToggle({model: canViewActiveNotify});
+        activeToggle.render();
+        App.instance('ActiveToggleView', activeToggle);
     });
 
     function fetchExpiredNotifications () {

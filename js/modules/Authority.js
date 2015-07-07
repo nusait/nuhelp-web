@@ -23,7 +23,7 @@ function fetchPermissionManifest() {
 
 function canPerformActionOnResource(action, resource) {
     if (this.resources().indexOf(resource) > -1) {
-        var actions = this.manifest[resource];
+        var actions = _.values(this.manifest[resource]);
         return (actions.indexOf(action) > -1);
     }
     return false;

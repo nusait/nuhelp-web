@@ -48,11 +48,13 @@
     "notify-map-template": "./js/templates/notify-map.hbs",
     "notify-list-template": "./js/templates/notify-list.hbs",
     "notify-list-item-template": "./js/templates/notify-list-item.hbs",
+    "checkbox-active-notifications": "./js/templates/checkbox-active-notifications.hbs",
     "Notify": "./js/models/Notify.js",
     "NotifyCollection": "./js/collections/NotifyCollection.js",
     "NotifyMapView": "./js/views/NotifyMapView.js",
     "NotifyListView": "./js/views/NotifyListView.js",
     "NotifyListItemView": "./js/views/NotifyListItemView.js",
+    "InspectActiveNotifyToggle": "./js/views/InspectActiveNotifyToggle.js",
     "EnvVar": "./.env.json"
   },
   "browserify": {
