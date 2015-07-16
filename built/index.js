@@ -1341,11 +1341,14 @@ function bindDomEvents() {
             var partials = (json['partial']);
             Helper.removeChildren(partialContainer);
             partials.forEach(function (partial) {
-                var htmlStr = '<option value="' + partial.phone + '">';
+                //var htmlStr = '<option value="' + partial.phone + '">';
+                var label = partial.phone + ' - ' + partial.first_name + ' ' + partial.last_name;
+                //console.log(label);
+                var htmlStr = '<option value="' + partial.phone + '" label="' + label + '">';
                 partialContainer.appendChild(Helper.parseHTML(htmlStr));
             });
         };
-        
+
         if (query === '') {
             Helper.removeChildren(partialContainer);
             return;
