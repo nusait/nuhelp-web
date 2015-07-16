@@ -38,6 +38,11 @@ function queryAll(selector) {
     result = Array.prototype.slice.call(elements);
     return result;
 }
+function removeAllChildren(node) {
+    while (node.hasChildNodes()) {
+        node.removeChild(node.lastChild);
+    }
+}
 
 function isElementThisSelector(el, selector) {
     var parent = this;
@@ -182,7 +187,8 @@ var Helper = {
     parseHTML: parseHTML,
     queryString: queryString,
     findParent: findParentWithSelector,
-    ajax: makeAjaxPromise
+    ajax: makeAjaxPromise,
+    removeChildren: removeAllChildren,
 };
 
 module.exports = Helper;

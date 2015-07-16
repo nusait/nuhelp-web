@@ -607,6 +607,11 @@ function queryAll(selector) {
     result = Array.prototype.slice.call(elements);
     return result;
 }
+function removeAllChildren(node) {
+    while (node.hasChildNodes()) {
+        node.removeChild(node.lastChild);
+    }
+}
 
 function isElementThisSelector(el, selector) {
     var parent = this;
@@ -751,7 +756,8 @@ var Helper = {
     parseHTML: parseHTML,
     queryString: queryString,
     findParent: findParentWithSelector,
-    ajax: makeAjaxPromise
+    ajax: makeAjaxPromise,
+    removeChildren: removeAllChildren,
 };
 
 module.exports = Helper;
@@ -952,7 +958,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div id=\"search-input\">\n    <input type=\"search\" placeholder=\"Phone Number\"/> <button>Search</button>\n</div>";
+  return "<form id=\"search-input\" action=\"\">\n    <input type=\"search\" placeholder=\"Phone Number\" list=\"notification-search-partial\"/> <button>Search</button>\n    <datalist id=\"notification-search-partial\">\n    </datalist>\n</form>";
   });
 
 },{"hbsfy/runtime":254}],22:[function(require,module,exports){
@@ -1326,9 +1332,48 @@ function bindViewEvents() {
 
 function bindDomEvents() {
     console.log('bound dom event in ' + this.name);
+
+    this.on('keyup', 'input', function (evt) {
+        var container = this.parentNode;
+        var query = container.querySelector('input').value;
+        var partialContainer = container.querySelector('#notification-search-partial');
+        var addOptionTagFromJson = function (json) {
+            var partials = (json['partial']);
+            Helper.removeChildren(partialContainer);
+            partials.forEach(function (partial) {
+                var htmlStr = '<option value="' + partial.phone + '">';
+                partialContainer.appendChild(Helper.parseHTML(htmlStr));
+            });
+        };
+        
+        if (query === '') {
+            Helper.removeChildren(partialContainer);
+            return;
+        }
+        if (query.length === 2) {
+            Helper.ajax('get', Helper.url('notifications/search', {query : query, partialonly : true}))
+                .then(addOptionTagFromJson);
+        }
+    });
+
     this.on('click','button', function (evt) {
         evt.preventDefault();
-        console.log('send a search!');
+        var query = this.parentNode.querySelector('input').value;
+        if (query === '') {
+            Helper.ajax('get', Helper.url('notifications/expired', {'query' : query}))
+                .then(function (json) {
+                    var collection = App.make('notifications');
+                    collection.set(json.notifications);
+                });
+        }
+        else {
+            Helper.ajax('get', Helper.url('notifications/search', {'query' : query}))
+                .then(function (json) {
+                    var collection = App.make('notifications');
+                    collection.set(json.notifications);
+                });
+        }
+
     });
 }
 
