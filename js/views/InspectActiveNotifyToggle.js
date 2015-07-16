@@ -1,6 +1,6 @@
 var View = require('View');
 var Helper = require('Helper');
-var listItemTemp = require('checkbox-active-notifications');
+var template = require('checkbox-active-notifications');
 
 function bindViewEvents() {
     console.log('bound view event in ' + this.name);
@@ -34,7 +34,7 @@ InspectActiveNotifyToggle.prototype = Object.create(View.prototype);
 var proto = {
     name: 'inspectActiveNotifyToggle',
     sel: '#show-active-notifications-container',
-    template: listItemTemp,
+    template: template,
     bindViewEvents: bindViewEvents,
     bindDomEvents: bindDomEvents
 };

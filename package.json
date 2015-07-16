@@ -49,12 +49,14 @@
     "notify-list-template": "./js/templates/notify-list.hbs",
     "notify-list-item-template": "./js/templates/notify-list-item.hbs",
     "checkbox-active-notifications": "./js/templates/checkbox-active-notifications.hbs",
+    "notify-search-input": "./js/templates/notify-search-input.hbs",
     "Notify": "./js/models/Notify.js",
     "NotifyCollection": "./js/collections/NotifyCollection.js",
     "NotifyMapView": "./js/views/NotifyMapView.js",
     "NotifyListView": "./js/views/NotifyListView.js",
     "NotifyListItemView": "./js/views/NotifyListItemView.js",
     "InspectActiveNotifyToggle": "./js/views/InspectActiveNotifyToggle.js",
+    "NotifySearchInputView": "./js/views/NotifySearchInputView.js",
     "EnvVar": "./.env.json"
   },
   "browserify": {
@@ -91,6 +93,7 @@
     "ampersand-collection": "^1.4.5",
     "lodash": "^3.7.0",
     "ampersand-view": "^7.4.1",
-    "ampersand-collection-view": "^1.4.0"
+    "ampersand-collection-view": "^1.4.0",
+    "mapbox-gl": "^0.8.1"
   }
 }

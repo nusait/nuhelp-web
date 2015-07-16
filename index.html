@@ -6,7 +6,7 @@
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto" />
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato"/>
 	<link rel="stylesheet" href="lib/leaflet-style/style.css"/>
-	<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css' rel='stylesheet' />
+	<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.8.1/mapbox-gl.css' rel='stylesheet' />
 	<link rel="stylesheet" href="built/main.css"/>
 </head>
 <body>
@@ -14,12 +14,13 @@
 	<div id="main-content-container" role="main">
 		<div id="login-view-container"></div>
 		<h1>Safe Walk Map</h1>
-		<div id="notify-map-view-container" style="width: 600px; height: 600px"></div>
+		<div id="notify-map-view-container" style="width: 100%; height: 600px;"></div>
 		<div id="notify-list-view-container">
 			<h2>Notifications</h2>
 			<div id="show-active-notifications-container">
 
 			</div>
+			<div id="notification-search-container"></div>
 			<ul id="notifications"></ul>
 		</div>
 		<!--<div id="report-list-view"></div>-->

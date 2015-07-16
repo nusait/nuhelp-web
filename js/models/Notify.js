@@ -1,5 +1,6 @@
 var State = require('ampersand-state');
 var User = require('User');
+var moment = require('moment');
 
 var Notify = State.extend({
     props: {
@@ -32,16 +33,23 @@ var Notify = State.extend({
                 if ( !! this.notified_at) {
                     return 'notified';
                 }
-                if (this.notified_at === null && this.canceled_at === null) {
-                    return 'expired';
+                if ( !! this.canceled_at) {
+                    return 'canceled';
                 }
                 if (this.remaining_time > 0 && this.canceled_at === null) {
                     return 'active';
                 }
-                if ( !! this.canceled_at) {
-                    return 'canceled';
+                if (this.notified_at === null && this.canceled_at === null) {
+                    return 'expired';
                 }
                 return 'unknown';
+            }
+        },
+        created: {
+            deps: ['created_at'],
+            fn: function () {
+                console.log('MOMENT!!:', moment(this.created_at));
+                return moment(this.created_at).fromNow();
             }
         }
     }

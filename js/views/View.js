@@ -25,7 +25,6 @@ function View (opts) {
 
     this.bindViewEvents();
     this.events.once('view.rendered.' + this.name, this.bindDomEvents.bind(this));
-    //console.log(this.sel, this.parent);
     this.addFancyButtonEvent();
 }
 
@@ -52,7 +51,6 @@ function addFancyButtonEvent() {
 
 function render() {
     var parent = this.parent.el || this.parent;
-    console.log('THIS IS THIS EL!', this.template(this.model));
     this.el = Helper.parseHTML(this.template(this.model));
     parent.appendChild(this.el);
     this.events.emit('view.rendered.' + this.name, this);
