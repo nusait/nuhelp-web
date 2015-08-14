@@ -10,6 +10,7 @@ var MainNavigationView = require('MainNavigationView');
 var Helper = require('Helper');
 var Config = require('Config');
 var Env = require('Env');
+var Router = require('Router');
 var LoginView = require('LoginView');
 var moment = require('moment');
 var EventEmitter2 = require('eventemitter2').EventEmitter2;
@@ -25,6 +26,8 @@ var ioClient = require('socket.io-client')(Config.nodeUrl[Env.getEnvironment()])
 
     global.App = new Container();
 
+    var router = new Router();
+    router.history.start();
     var events = new EventEmitter2({
         wildcard: true
     });
@@ -32,6 +35,7 @@ var ioClient = require('socket.io-client')(Config.nodeUrl[Env.getEnvironment()])
     App.instance('auth', new Auth());
     App.instance('authority', new Authority());
     App.instance('login', new LoginView());
+    App.instance('router', router);
 
     ioClient.on('connect', function () {
         console.log('connected to socket!', ioClient.id);

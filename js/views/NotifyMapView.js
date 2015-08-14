@@ -6,6 +6,7 @@ var Config = require('Config');
 var EnvVar = require('EnvVar');
 var _ = require('lodash');
 var moment = require('moment');
+//var facilities = require('Facilities');
 
 function bindViewEvents() {
 
@@ -20,9 +21,10 @@ function NotifyMapView() {
     var container = Helper.queryOne('#notify-map-view-container');
     var dim = calculateMapDimensions();
     container.style.height = dim[1] + 'px';
-    var map = L.mapbox.map('notify-map-view-container', 'examples.map-i86nkdio')
+    var map = L.mapbox.map('notify-map-view-container', 'nusaitweb.hl31on6d')
         .setView([42.054566, -87.675615], 16);
     map.attributionControl.setPosition('bottomleft');
+    //map.featureLayer.setGeoJSON(facilities);
     this.mapInstance = map;
 }
 
@@ -55,10 +57,13 @@ function drawNotifyLine(notify) {
             dots.push(dot);
         }, this);
         var path = L.polyline(latLongs, {color: 'green'});
+        var bound = path.getBounds();
+        this.mapInstance.fitBounds(bound, {padding: [10, 30]});
         currentLine.addLayer(path);
         _.each(dots, function (dot) {
            currentLine.addLayer(dot);
         });
+
         this.lines['notification-' + notify.id] = currentLine;
         currentLine.addTo(this.mapInstance);
     }.bind(this);

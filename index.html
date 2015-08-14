@@ -3,10 +3,11 @@
 	<head>
 	<meta charset="UTF-8">
 	<title>NuHelp Admin Dashboard</title>
+	<base href="/nuhelpweb/"/>
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto" />
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato"/>
 	<link rel="stylesheet" href="lib/leaflet-style/style.css"/>
-	<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.8.1/mapbox-gl.css' rel='stylesheet' />
+	<link href='https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.css' rel='stylesheet' />
 	<link rel="stylesheet" href="built/main.css"/>
 </head>
 <body>
@@ -16,15 +17,13 @@
 		<h1>Safe Walk Map</h1>
 		<div id="notify-map-view-container" style="width: 100%; height: 600px;"></div>
 		<div id="notify-list-view-container">
-			<h2>Notifications</h2>
-			<div id="show-active-notifications-container">
-
+			<div class="controls">
+				<h2>Notifications</h2>
+				<div id="show-active-notifications-container"></div>
+				<div id="notification-search-container"></div>
 			</div>
-			<div id="notification-search-container"></div>
 			<ul id="notifications"></ul>
 		</div>
-		<!--<div id="report-list-view"></div>-->
-    	<!--<div id="report-creation-view"></div>-->
 	</div>
 	<script src="built/index.js"></script>
 </body>

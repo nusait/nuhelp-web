@@ -23,7 +23,6 @@ NotifyListItemView.prototype = Object.create(View.prototype);
 function render() {
     View.prototype.render.call(this);
     setTimeout(function () {
-        debugger;
         this.el.classList.remove('removed');
     }.bind(this), 1);
 }

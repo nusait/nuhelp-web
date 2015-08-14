@@ -13,6 +13,11 @@
   height: 100%;
 }
 
+#search-input {
+  button {
+    display: inline-block;
+  }
+}
 
 .notification {
   background-color: white;

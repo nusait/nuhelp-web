@@ -294,6 +294,9 @@ input, textarea {
   height: calc(100% - 50px);
   height: 100%; }
 
+#search-input button {
+  display: inline-block; }
+
 .notification {
   background-color: white;
   box-shadow: 0px 2px 2px rgba(100, 100, 100, 0.5);

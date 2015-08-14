@@ -99,7 +99,7 @@ function url(resource, queryObj , secure) {
         secure = envSecured();
     }
     var base = baseUrl(secure);
-    var url = base + '/api/' + resource;
+    var url = base + '/api/v1/' + resource;
 
     if (typeof queryObj === 'object') {
         return url + '?' + serializeQuery(queryObj);

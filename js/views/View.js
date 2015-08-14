@@ -15,7 +15,6 @@ function View (opts) {
         opts = {};
     }
     var options = _.defaults(opts, defaultOpts);
-    console.log(opts);
     this.model = options.model;
     this.collection = options.collection;
 

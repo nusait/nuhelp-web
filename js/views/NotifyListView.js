@@ -3,7 +3,7 @@ var Helper = require('Helper');
 var Delegate = require('Delegate');
 
 function removeClassnameFromChildren(selector, classname) {
-    nodeArray = Helper.queryAll.call(this, selector);
+    var nodeArray = Helper.queryAll.call(this, selector);
     nodeArray.forEach(function (node) {
         node.classList.remove(classname);
     });
@@ -13,7 +13,13 @@ function NotifyListView (opts) {
     CollectionView.call(this, opts);
     var collection = this.collection;
     var ins = this;
-    this.on('click', '.notification', function () {
+    App.make('MapView').mapInstance.on('click', function (evt) {
+        removeClassnameFromChildren.call(Helper.queryOne('#notifications'), '.notification', 'selected');
+        App.make('MapView').removeAllExistingLines();
+    });
+
+    this.on('click', '.notification', function (evt) {
+        evt.stopPropagation();
         var id = this.dataset.id;
         var map = App.make('MapView');
         removeClassnameFromChildren.call(this.closest('#notifications'), '.notification', 'selected');
