@@ -5,6 +5,7 @@
   overflow: auto;
   height: 100%;
   width: 30%;
+  background-color: rgba(#2e2e2e, 0.3);
 }
 
 #notify-map-view-container {
@@ -14,6 +15,7 @@
 }
 
 #search-input {
+  padding-left: 20px;
   button {
     display: inline-block;
   }

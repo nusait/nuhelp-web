@@ -287,15 +287,18 @@ input, textarea {
   right: 0;
   overflow: auto;
   height: 100%;
-  width: 30%; }
+  width: 30%;
+  background-color: rgba(46, 46, 46, 0.3); }
 
 #notify-map-view-container {
   width: 100%;
   height: calc(100% - 50px);
   height: 100%; }
 
-#search-input button {
-  display: inline-block; }
+#search-input {
+  padding-left: 20px; }
+  #search-input button {
+    display: inline-block; }
 
 .notification {
   background-color: white;

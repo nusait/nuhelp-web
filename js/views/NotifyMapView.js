@@ -21,7 +21,7 @@ function NotifyMapView() {
     var container = Helper.queryOne('#notify-map-view-container');
     var dim = calculateMapDimensions();
     container.style.height = dim[1] + 'px';
-    var map = L.mapbox.map('notify-map-view-container', 'nusaitweb.hl31on6d')
+    var map = L.mapbox.map('notify-map-view-container', 'nusaitweb.j0cchc70')
         .setView([42.054566, -87.675615], 16);
     map.attributionControl.setPosition('bottomleft');
     //map.featureLayer.setGeoJSON(facilities);
@@ -31,7 +31,7 @@ function NotifyMapView() {
 function removeExistingNotifyLines() {
     var map = this.mapInstance;
     _.each(this.lines, function (layerGroup) {
-        map.removeLayer(layerGroup);
+        map.removeLayer(layerGroup.group);
     });
 }
 
@@ -44,33 +44,60 @@ function calculateMapDimensions() {
 function drawNotifyLine(notify) {
     var drawLineFromJson = function (json) {
         var locations = json.locations;
-        var latLongs = [];
-        var dots = [];
-        var currentLine = L.layerGroup();
-        _.each(locations, function (loc) {
-            var latlng = L.latLng(loc.lat, loc.long);
-            latLongs.push(latlng);
-            var date = moment(new Date(loc.recorded_at));
-            var timeStr = date.format('MM/DD h:mm:ss a') + ' (' + date.fromNow() + ')';
-            var popup = L.popup().setContent('<p>Recorded At: ' + timeStr + ' </p>');
-            var dot = L.circleMarker(latlng).setRadius(6).bindPopup(popup);
-            dots.push(dot);
+        var groupObj = addNotifyStartingPoint.call(this, notify);
+        _.each(locations, function (location) {
+            this.addNewLocation(notify.id, location, groupObj);
         }, this);
-        var path = L.polyline(latLongs, {color: 'green'});
-        var bound = path.getBounds();
-        this.mapInstance.fitBounds(bound, {padding: [10, 30]});
-        currentLine.addLayer(path);
-        _.each(dots, function (dot) {
-           currentLine.addLayer(dot);
-        });
 
-        this.lines['notification-' + notify.id] = currentLine;
-        currentLine.addTo(this.mapInstance);
+        groupObj.group.addTo(this.mapInstance);
+        this.reboundLine(notify.id);
     }.bind(this);
 
     Helper
         .ajax('get', Helper.url('notifications/' + notify.id, {include: 'locations'}))
         .then(drawLineFromJson);
+}
+function addNotifyStartingPoint(notify) {
+    var currentGroup = L.layerGroup();
+    var latlong = L.latLng(notify.origin_lat, notify.origin_long);
+    var path = L.polyline([latlong], {color: 'green'});
+
+    var date = moment(new Date(notify.created_at));
+    var timeStr = date.format('MM/DD h:mm:ss a') + ' (' + date.fromNow() + ')';
+    var popup = L.popup().setContent('<p>Recorded At: ' + timeStr + ' </p>');
+    var dot = L.circleMarker(latlong, {color: '#F00'}).setRadius(6).bindPopup(popup);
+
+    currentGroup.addLayer(path);
+    currentGroup.addLayer(dot);
+    var groupObj = {line: path, group: currentGroup};
+    this.lines['notification-' + notify.id] = groupObj;
+
+    return groupObj;
+}
+
+function addNotifyPoint(notifyId, location, groupObj) {
+    var layer = this.lines['notification-' + notifyId];
+    if (!! groupObj) {
+        layer = groupObj;
+    }
+    if (typeof layer === 'undefined') return;
+
+    var line = layer.line;
+
+    var latlng = L.latLng(location.lat, location.long);
+    line.addLatLng(latlng);
+
+    var date = moment(new Date(location.recorded_at));
+    var timeStr = date.format('MM/DD h:mm:ss a') + ' (' + date.fromNow() + ')';
+    var popup = L.popup().setContent('<p>Recorded At: ' + timeStr + ' </p>');
+    var dot = L.circleMarker(latlng).setRadius(6).bindPopup(popup);
+    layer.group.addLayer(dot);
+}
+
+function reboundLine(notifyId) {
+    var layer = this.lines['notification-' + notifyId];
+    var bound = layer.line.getBounds();
+    this.mapInstance.fitBounds(bound, {padding: [10, 30]});
 }
 
 NotifyMapView.prototype = Object.create(View.prototype);
@@ -83,7 +110,9 @@ var proto = {
     bindViewEvents: bindViewEvents,
     bindDomEvents: bindDomEvents,
     drawLine: drawNotifyLine,
-    removeAllExistingLines: removeExistingNotifyLines
+    removeAllExistingLines: removeExistingNotifyLines,
+    addNewLocation: addNotifyPoint,
+    reboundLine: reboundLine
 };
 
 Helper.mixin(NotifyMapView.prototype, proto);

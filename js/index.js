@@ -68,18 +68,13 @@ var ioClient = require('socket.io-client')(Config.nodeUrl[Env.getEnvironment()])
         if ( ! notifications.at(data.notification_id)) {
             return;
         }
+        var notifyId = data.notification_id;
 
-        Helper.ajax('get', Helper.url('notifications/' + data.notification_id + '/locations/latest')).then(function (json) {
-            var lat = json.lat;
-            var long = json.long;
-            var latLong = L.latLng(lat, long);
-            var map = App.make('MapView');
-            var line = map.lines['notification-' + data.notification_id];
-            line.addLatLng(latLong);
-            var date = moment(new Date(json.recorded_at));
-            var timeStr = date.format('MM/DD/YY h:mm:ss a');
-            var popup = L.popup().setContent('<p>Recorded At: ' + timeStr + ' </p>');
-            L.circleMarker(latLong).setRadius(6).addTo(map.mapInstance).bindPopup(popup);
+        var map = App.make('MapView');
+
+        Helper.ajax('get', Helper.url('notifications/' + notifyId + '/locations/' + data.latest_location_id)).then(function (json) {
+            map.addNewLocation(notifyId, json);
+            map.reboundLine(notifyId);
         });
     });
 

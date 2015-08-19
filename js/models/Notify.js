@@ -7,8 +7,8 @@ var Notify = State.extend({
         id: 'number',
         updated_at: 'date',
         created_at: 'date',
-        original_lat: 'number',
-        original_long: 'number',
+        origin_lat: 'number',
+        origin_long: 'number',
         destination_lat: 'number',
         destination_long: 'number',
         contact_name: 'string',
@@ -48,7 +48,6 @@ var Notify = State.extend({
         created: {
             deps: ['created_at'],
             fn: function () {
-                console.log('MOMENT!!:', moment(this.created_at));
                 return moment(this.created_at).fromNow();
             }
         }
