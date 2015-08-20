@@ -1,11 +1,13 @@
 #login-view {
   width: 300px;
-  margin: 0 auto;
+  left: 50%;
+  margin-left: -150px;
   background-color: $silver;
   padding: 20px;
   border-radius: 5px;
-  position: relative;
+  position: absolute;
   top: 100px;
+  transition: top 0.7s;
 
   &.closed {
     top: -400px;

@@ -1108,6 +1108,14 @@ function LoginView() {
     View.call(this);
 }
 
+function hide() {
+    this.el.classList.add('closed');
+}
+
+function show() {
+    this.el.classList.remove('closed');
+}
+
 LoginView.prototype = Object.create(View.prototype);
 
 var proto = {
@@ -1115,7 +1123,10 @@ var proto = {
     sel: '#login-view-container',
     template: loginTemp,
     bindViewEvents: bindViewEvents,
-    bindDomEvents: bindDomEvents
+    bindDomEvents: bindDomEvents,
+    hide: hide,
+    show: show
+
 };
 
 Helper.mixin(LoginView.prototype, proto);
