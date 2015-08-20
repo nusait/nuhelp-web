@@ -90,7 +90,7 @@ function addNotifyStartingPoint(notify) {
 
     var date = moment(new Date(notify.created_at));
     var timeStr = date.format('MM/DD h:mm:ss a') + ' (' + date.fromNow() + ')';
-    var popup = L.popup().setContent('<p>Recorded At: ' + timeStr + ' </p>');
+    var popup = L.popup().setContent('<strong>Starting Point</strong><br><p>Recorded At: ' + timeStr + ' </p>');
     var dot = L.circleMarker(latlong, {color: '#F00'}).setRadius(6).bindPopup(popup);
 
     currentGroup.addLayer(path);

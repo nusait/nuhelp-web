@@ -24,8 +24,12 @@ function NotifyListView (opts) {
 
     events.on('auth.userLoggedIn', function () {
         showList();
+
+    });
+
+    events.on('authority.newPermissionManifest', function () {
         if (App.make('authority').can('read', 'Notify')) {
-            Helper.ajax('get', Helper.url('notifications/expired', {'query' : query}))
+            Helper.ajax('get', Helper.url('notifications/expired'))
                 .then(function (json) {
                     var collection = App.make('notifications');
                     collection.set(json.notifications);
