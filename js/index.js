@@ -105,29 +105,48 @@ var ioClient = require('socket.io-client')(Config.nodeUrl[Env.getEnvironment()])
         if(! auth.check()) {
             loginView.render();
         }
-    }).then(function () {
-        return fetchExpiredNotifications();
-    }).then(function (json) {
-        var collection = new NotifyCollection(json.notifications);
-        App.instance('notifications', collection);
-        var collectionView = new CollectionView({
-            el: document.querySelector('#notifications'),
-            collection: collection,
-            view: NotifyListItemView
-        });
-        App.instance('NotificationListView', collectionView);
-        var search = new NotifySearchInputView();
-        search.render();
-        collectionView.render();
-        var canInspect = App.make('authority').can('inspect','Notify');
-        var canViewActiveNotify = {canInspectActive: canInspect};
-        var activeToggle =  new InspectActiveNotifyToggle({model: canViewActiveNotify});
-        activeToggle.render();
-        App.instance('ActiveToggleView', activeToggle);
+    }).catch(function (err) {
+        console.log(err);
     });
 
-    function fetchExpiredNotifications () {
-        return Helper.ajax('get', Helper.url('notifications/expired'))
+    if (App.make('auth').check()) {
+        startNotificationBootstrap();
+    }
+
+    events.on('auth.userLoggedIn', function () {
+        startNotificationBootstrap();
+    });
+
+
+    function fetchExpiredNotifications() {
+        return Helper.ajax('get', Helper.url('notifications/expired'));
+    }
+
+    function startNotificationBootstrap() {
+        if ( !! App.make('notifications')) return;
+
+        fetchExpiredNotifications()
+            .then(function (json) {
+                var collection = new NotifyCollection(json.notifications);
+                App.instance('notifications', collection);
+                var collectionView = new CollectionView({
+                    el: document.querySelector('#notifications'),
+                    collection: collection,
+                    view: NotifyListItemView
+                });
+                App.instance('NotificationListView', collectionView);
+                var search = new NotifySearchInputView();
+                search.render();
+                collectionView.render();
+                var canInspect = App.make('authority').can('inspect','Notify');
+                var canViewActiveNotify = {canInspectActive: canInspect};
+                var activeToggle =  new InspectActiveNotifyToggle({model: canViewActiveNotify});
+                activeToggle.render();
+                App.instance('ActiveToggleView', activeToggle);
+            })
+            .catch(function(err) {
+                console.log(err);
+            });
     }
 
 

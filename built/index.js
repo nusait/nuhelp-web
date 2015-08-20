@@ -106,29 +106,48 @@ var ioClient = require('socket.io-client')(Config.nodeUrl[Env.getEnvironment()])
         if(! auth.check()) {
             loginView.render();
         }
-    }).then(function () {
-        return fetchExpiredNotifications();
-    }).then(function (json) {
-        var collection = new NotifyCollection(json.notifications);
-        App.instance('notifications', collection);
-        var collectionView = new CollectionView({
-            el: document.querySelector('#notifications'),
-            collection: collection,
-            view: NotifyListItemView
-        });
-        App.instance('NotificationListView', collectionView);
-        var search = new NotifySearchInputView();
-        search.render();
-        collectionView.render();
-        var canInspect = App.make('authority').can('inspect','Notify');
-        var canViewActiveNotify = {canInspectActive: canInspect};
-        var activeToggle =  new InspectActiveNotifyToggle({model: canViewActiveNotify});
-        activeToggle.render();
-        App.instance('ActiveToggleView', activeToggle);
+    }).catch(function (err) {
+        console.log(err);
     });
 
-    function fetchExpiredNotifications () {
-        return Helper.ajax('get', Helper.url('notifications/expired'))
+    if (App.make('auth').check()) {
+        startNotificationBootstrap();
+    }
+
+    events.on('auth.userLoggedIn', function () {
+        startNotificationBootstrap();
+    });
+
+
+    function fetchExpiredNotifications() {
+        return Helper.ajax('get', Helper.url('notifications/expired'));
+    }
+
+    function startNotificationBootstrap() {
+        if ( !! App.make('notifications')) return;
+
+        fetchExpiredNotifications()
+            .then(function (json) {
+                var collection = new NotifyCollection(json.notifications);
+                App.instance('notifications', collection);
+                var collectionView = new CollectionView({
+                    el: document.querySelector('#notifications'),
+                    collection: collection,
+                    view: NotifyListItemView
+                });
+                App.instance('NotificationListView', collectionView);
+                var search = new NotifySearchInputView();
+                search.render();
+                collectionView.render();
+                var canInspect = App.make('authority').can('inspect','Notify');
+                var canViewActiveNotify = {canInspectActive: canInspect};
+                var activeToggle =  new InspectActiveNotifyToggle({model: canViewActiveNotify});
+                activeToggle.render();
+                App.instance('ActiveToggleView', activeToggle);
+            })
+            .catch(function(err) {
+                console.log(err);
+            });
     }
 
 
@@ -261,7 +280,9 @@ function submitLogin(netid, password) {
         return new Promise(function (resolve) {
             resolve(json);
         });
-    }.bind(this)).catch(function (error) {
+    }.bind(this))
+    .catch(function (error) {
+        console.log('caught the error!!!!!');
         console.log(error);
     });
 }
@@ -286,9 +307,9 @@ function fetchUserInfo() {
             resolve(json);
         });
     }).catch(function (err) {
-        setTimeout(function () {
-            throw err;
-        }, 1);
+        //setTimeout(function () {
+        //    throw err;
+        //}, 1);
     });
 
     return request;
@@ -297,12 +318,16 @@ function fetchUserInfo() {
 function startAuthPromise() {
     if (this.check()) {
         var req = fetchUserInfo();
-        return req.then(function(json) {
-            setCurrentUser.call(this, json);
-            return new Promise(function (resolve) {
-                resolve(json);
+        return req
+            .then(function(json) {
+                setCurrentUser.call(this, json);
+                return new Promise(function (resolve) {
+                    resolve(json);
+                    });
+                }.bind(this))
+            .catch(function (error) {
+                console.log(error.message);
             });
-        }.bind(this));
     } else {
         console.log('not logged in');
         return new Promise(function (resolve) {
@@ -340,6 +365,7 @@ function start() {
 function fetchPermissionManifest() {
     return Helper.ajax('get', Helper.url('users', {'query': 'permission'})).then(function (json) {
         this.setManifest(json);
+        App.make('events').emit('authority.newPermissionManifest');
     }.bind(this));
 }
 
@@ -755,7 +781,13 @@ function makeAjaxPromise(type, path, data, addHeader) {
         headers: headers,
         body: dataString
     }).then(function (response) {
-        return response.json();
+        if (response.status >= 200 && response.status < 300) {
+            return response.json();
+        } else {
+            var error = new Error(response.statusText);
+            error.response = response;
+            throw error;
+        }
     });
 
 }
@@ -847,23 +879,10 @@ var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var stack1, self=this;
+  
 
-function program1(depth0,data) {
-  
-  
-  return "\n    <div>\n<input type=\"checkbox\" id=\"show-active-notifications\"/>\n<label for=\"show-active-notifications\">Show Active Notifications</label>\n    </div>\n";
-  }
 
-function program3(depth0,data) {
-  
-  
-  return "\n    <div></div>\n";
-  }
-
-  stack1 = helpers['if'].call(depth0, (depth0 && depth0.canInspectActive), {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
-  if(stack1 || stack1 === 0) { return stack1; }
-  else { return ''; }
+  return "<div class=\"hidden\">\n    <input type=\"checkbox\" id=\"show-active-notifications\"/>\n    <label for=\"show-active-notifications\">Show Active Notifications</label>\n</div>\n";
   });
 
 },{"hbsfy/runtime":300}],18:[function(require,module,exports){
@@ -875,7 +894,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div id=\"login-view\">\n    <form action=\"\">\n        <label class=\"hidden\" for=\"netid\">NetID:</label><input type=\"text\" id=\"netid\" name=\"netid\" placeholder=\"NetID\"/>\n        <br>\n        <label class=\"hidden\" for=\"password\">Password</label><input type=\"password\" id=\"password\" name=\"password\" placeholder=\"Password\"/>\n        <button type=\"submit\">Login</button>\n    </form>\n</div>";
+  return "<div id=\"login-view\">\n    <h3>Please Login</h3>\n    <form action=\"\">\n        <label class=\"hidden\" for=\"netid\">NetID:</label><input type=\"text\" id=\"netid\" name=\"netid\" placeholder=\"NetID\"/>\n        <br>\n        <label class=\"hidden\" for=\"password\">Password</label><input type=\"password\" id=\"password\" name=\"password\" placeholder=\"Password\"/>\n        <button type=\"submit\">Login</button>\n    </form>\n</div>";
   });
 
 },{"hbsfy/runtime":300}],19:[function(require,module,exports){
@@ -997,6 +1016,19 @@ var template = require('checkbox-active-notifications');
 
 function bindViewEvents() {
     console.log('bound view event in ' + this.name);
+
+    this.events.on('authority.newPermissionManifest', function () {
+        var canInspect = App.make('authority').can('inspect','Notify');
+        if (canInspect) {
+            this.show();
+        } else {
+            this.hide();
+        }
+    }.bind(this));
+
+    this.events.on('auth.userLoggedOut', function () {
+        this.hide();
+    }.bind(this));
 }
 
 function bindDomEvents() {
@@ -1042,7 +1074,6 @@ var Helper = require('Helper');
 var loginTemp = require('login-template');
 
 function bindViewEvents() {
-    var Auth = this.Auth;
     console.log('bound view event in login');
     this.events.on('auth.userLoggedIn', function () {
         console.log('loggedin!!!!');
@@ -1222,11 +1253,41 @@ function removeClassnameFromChildren(selector, classname) {
         node.classList.remove(classname);
     });
 }
+function showList() {
+    Helper.queryOne('#notify-list-view-container').classList.remove('hidden');
+}
+
+function hideList() {
+    Helper.queryOne('#notify-list-view-container').classList.add('hidden');
+}
 
 function NotifyListView (opts) {
     CollectionView.call(this, opts);
     var collection = this.collection;
-    var ins = this;
+
+    var events = App.make('events');
+
+    events.on('auth.userLoggedIn', function () {
+        showList();
+        if (App.make('authority').can('read', 'Notify')) {
+            Helper.ajax('get', Helper.url('notifications/expired', {'query' : query}))
+                .then(function (json) {
+                    var collection = App.make('notifications');
+                    collection.set(json.notifications);
+                });
+        }
+    });
+
+    events.on('auth.userLoggedOut', function () {
+        hideList();
+        this.collection.reset();
+    }.bind(this));
+
+    var auth = App.make('auth');
+    if (auth.check()) {
+        showList();
+    }
+
     App.make('MapView').mapInstance.on('click', function (evt) {
         removeClassnameFromChildren.call(Helper.queryOne('#notifications'), '.notification', 'selected');
         App.make('MapView').removeAllExistingLines();
@@ -1258,14 +1319,35 @@ require('mapbox.js');
 var View = require('View');
 var Helper = require('Helper');
 var mapTemp = require('notify-map-template');
-var Config = require('Config');
 var EnvVar = require('EnvVar');
 var _ = require('lodash');
 var moment = require('moment');
 //var facilities = require('Facilities');
 
-function bindViewEvents() {
+function showMap(mapInstance) {
+    Helper.queryOne('#map-title').classList.remove('hidden');
+    Helper.queryOne('#notify-map-view-container').classList.remove('hidden');
+    if (!! mapInstance) {
+        mapInstance._onResize();
+    } else if ( !! App.make('MapView')) {
+        App.make('MapView').mapInstance._onResize();
+    }
+}
 
+function hideMap() {
+    Helper.queryOne('#map-title').classList.add('hidden');
+    Helper.queryOne('#notify-map-view-container').classList.add('hidden');
+}
+
+function bindViewEvents() {
+    this.events.on('auth.userLoggedIn', function () {
+        showMap();
+    });
+
+    this.events.on('auth.userLoggedOut', function () {
+        hideMap();
+        this.removeAllExistingLines();
+    }.bind(this));
 }
 
 function bindDomEvents() {
@@ -1274,14 +1356,18 @@ function bindDomEvents() {
 
 function NotifyMapView() {
     L.mapbox.accessToken = EnvVar.mapbox_token;
+    var auth = App.make('auth');
     var container = Helper.queryOne('#notify-map-view-container');
     var dim = calculateMapDimensions();
     container.style.height = dim[1] + 'px';
     var map = L.mapbox.map('notify-map-view-container', 'nusaitweb.j0cchc70')
         .setView([42.054566, -87.675615], 16);
     map.attributionControl.setPosition('bottomleft');
-    //map.featureLayer.setGeoJSON(facilities);
     this.mapInstance = map;
+    View.call(this);
+    if (auth.check()) {
+        showMap(map);
+    }
 }
 
 function removeExistingNotifyLines() {
@@ -1313,6 +1399,7 @@ function drawNotifyLine(notify) {
         .ajax('get', Helper.url('notifications/' + notify.id, {include: 'locations'}))
         .then(drawLineFromJson);
 }
+
 function addNotifyStartingPoint(notify) {
     var currentGroup = L.layerGroup();
     var latlong = L.latLng(notify.origin_lat, notify.origin_long);
@@ -1375,7 +1462,7 @@ Helper.mixin(NotifyMapView.prototype, proto);
 
 module.exports = NotifyMapView;
 
-},{"Config":10,"EnvVar":2,"Helper":14,"View":31,"lodash":301,"mapbox.js":317,"moment":332,"notify-map-template":21}],30:[function(require,module,exports){
+},{"EnvVar":2,"Helper":14,"View":31,"lodash":301,"mapbox.js":317,"moment":332,"notify-map-template":21}],30:[function(require,module,exports){
 var View = require('View');
 var Helper = require('Helper');
 var template = require('notify-search-input');

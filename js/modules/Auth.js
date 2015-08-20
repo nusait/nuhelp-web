@@ -22,7 +22,9 @@ function submitLogin(netid, password) {
         return new Promise(function (resolve) {
             resolve(json);
         });
-    }.bind(this)).catch(function (error) {
+    }.bind(this))
+    .catch(function (error) {
+        console.log('caught the error!!!!!');
         console.log(error);
     });
 }
@@ -47,9 +49,9 @@ function fetchUserInfo() {
             resolve(json);
         });
     }).catch(function (err) {
-        setTimeout(function () {
-            throw err;
-        }, 1);
+        //setTimeout(function () {
+        //    throw err;
+        //}, 1);
     });
 
     return request;
@@ -58,12 +60,16 @@ function fetchUserInfo() {
 function startAuthPromise() {
     if (this.check()) {
         var req = fetchUserInfo();
-        return req.then(function(json) {
-            setCurrentUser.call(this, json);
-            return new Promise(function (resolve) {
-                resolve(json);
+        return req
+            .then(function(json) {
+                setCurrentUser.call(this, json);
+                return new Promise(function (resolve) {
+                    resolve(json);
+                    });
+                }.bind(this))
+            .catch(function (error) {
+                console.log(error.message);
             });
-        }.bind(this));
     } else {
         console.log('not logged in');
         return new Promise(function (resolve) {

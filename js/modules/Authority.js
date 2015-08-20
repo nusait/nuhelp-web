@@ -18,6 +18,7 @@ function start() {
 function fetchPermissionManifest() {
     return Helper.ajax('get', Helper.url('users', {'query': 'permission'})).then(function (json) {
         this.setManifest(json);
+        App.make('events').emit('authority.newPermissionManifest');
     }.bind(this));
 }
 

@@ -2,14 +2,35 @@ require('mapbox.js');
 var View = require('View');
 var Helper = require('Helper');
 var mapTemp = require('notify-map-template');
-var Config = require('Config');
 var EnvVar = require('EnvVar');
 var _ = require('lodash');
 var moment = require('moment');
 //var facilities = require('Facilities');
 
-function bindViewEvents() {
+function showMap(mapInstance) {
+    Helper.queryOne('#map-title').classList.remove('hidden');
+    Helper.queryOne('#notify-map-view-container').classList.remove('hidden');
+    if (!! mapInstance) {
+        mapInstance._onResize();
+    } else if ( !! App.make('MapView')) {
+        App.make('MapView').mapInstance._onResize();
+    }
+}
 
+function hideMap() {
+    Helper.queryOne('#map-title').classList.add('hidden');
+    Helper.queryOne('#notify-map-view-container').classList.add('hidden');
+}
+
+function bindViewEvents() {
+    this.events.on('auth.userLoggedIn', function () {
+        showMap();
+    });
+
+    this.events.on('auth.userLoggedOut', function () {
+        hideMap();
+        this.removeAllExistingLines();
+    }.bind(this));
 }
 
 function bindDomEvents() {
@@ -18,14 +39,18 @@ function bindDomEvents() {
 
 function NotifyMapView() {
     L.mapbox.accessToken = EnvVar.mapbox_token;
+    var auth = App.make('auth');
     var container = Helper.queryOne('#notify-map-view-container');
     var dim = calculateMapDimensions();
     container.style.height = dim[1] + 'px';
     var map = L.mapbox.map('notify-map-view-container', 'nusaitweb.j0cchc70')
         .setView([42.054566, -87.675615], 16);
     map.attributionControl.setPosition('bottomleft');
-    //map.featureLayer.setGeoJSON(facilities);
     this.mapInstance = map;
+    View.call(this);
+    if (auth.check()) {
+        showMap(map);
+    }
 }
 
 function removeExistingNotifyLines() {
@@ -57,6 +82,7 @@ function drawNotifyLine(notify) {
         .ajax('get', Helper.url('notifications/' + notify.id, {include: 'locations'}))
         .then(drawLineFromJson);
 }
+
 function addNotifyStartingPoint(notify) {
     var currentGroup = L.layerGroup();
     var latlong = L.latLng(notify.origin_lat, notify.origin_long);

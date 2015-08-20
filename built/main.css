@@ -272,14 +272,25 @@ input, textarea {
         background-color: rgba(189, 195, 199, 0.3); }
 
 #login-view {
-  width: 200px;
+  width: 300px;
+  margin: 0 auto;
   background-color: #bdc3c7;
-  padding: 10px; }
+  padding: 20px;
+  border-radius: 5px;
+  position: relative;
+  top: 100px; }
   #login-view.closed {
-    position: relative;
     top: -400px; }
+  #login-view h3 {
+    font-size: 1.7em;
+    text-align: center; }
   #login-view input {
-    width: 100%; }
+    width: 100%;
+    font-size: 1.5em;
+    margin: 10px 0; }
+  #login-view button {
+    width: 100%;
+    margin: 5px 0; }
 
 #notify-list-view-container {
   position: absolute;

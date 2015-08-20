@@ -4,6 +4,19 @@ var template = require('checkbox-active-notifications');
 
 function bindViewEvents() {
     console.log('bound view event in ' + this.name);
+
+    this.events.on('authority.newPermissionManifest', function () {
+        var canInspect = App.make('authority').can('inspect','Notify');
+        if (canInspect) {
+            this.show();
+        } else {
+            this.hide();
+        }
+    }.bind(this));
+
+    this.events.on('auth.userLoggedOut', function () {
+        this.hide();
+    }.bind(this));
 }
 
 function bindDomEvents() {

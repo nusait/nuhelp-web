@@ -4,7 +4,6 @@ var Helper = require('Helper');
 var loginTemp = require('login-template');
 
 function bindViewEvents() {
-    var Auth = this.Auth;
     console.log('bound view event in login');
     this.events.on('auth.userLoggedIn', function () {
         console.log('loggedin!!!!');
