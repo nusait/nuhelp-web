@@ -75,6 +75,9 @@ function drawNotifyLine(notify) {
         }, this);
 
         groupObj.group.addTo(this.mapInstance);
+
+        addNotifyDestinationPoint(notify, groupObj);
+
         this.reboundLine(notify.id);
     }.bind(this);
 
@@ -117,6 +120,19 @@ function addNotifyPoint(notifyId, location, groupObj) {
     var timeStr = date.format('MM/DD h:mm:ss a') + ' (' + date.fromNow() + ')';
     var popup = L.popup().setContent('<p>Recorded At: ' + timeStr + ' </p>');
     var dot = L.circleMarker(latlng).setRadius(6).bindPopup(popup);
+    layer.group.addLayer(dot);
+}
+
+function addNotifyDestinationPoint(notify, groupObj) {
+    var layer = groupObj;
+
+    if (typeof layer === 'undefined') return;
+
+    var latlng = L.latLng(notify.destination_lat, notify.destination_long);
+
+    var popup = L.popup().setContent('<p>This is the destination set by the user</p>');
+    var dot = L.circleMarker(latlng, {color:'orange', fillOpacity: 1}).setRadius(6).bindPopup(popup);
+
     layer.group.addLayer(dot);
 }
 
