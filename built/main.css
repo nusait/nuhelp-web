@@ -323,13 +323,21 @@ input, textarea {
   opacity: 1;
   max-height: 300px;
   -webkit-transition: max-height 0.5s, opacity 0.7s;
-          transition: max-height 0.5s, opacity 0.7s; }
+          transition: max-height 0.5s, opacity 0.7s;
+  min-height: 120px; }
   .notification:hover {
     -webkit-transition: box-shadow 0.2s, color 0.2s;
             transition: box-shadow 0.2s, color 0.2s;
     box-shadow: 0px 1px 8px rgba(100, 100, 100, 0.9); }
+  .notification .user-name {
+    margin-top: 15px; }
   .notification .user-phone {
     margin-bottom: 10px; }
+  .notification .user-photo {
+    max-width: 120px;
+    max-height: 120px;
+    border-radius: 120px;
+    float: right; }
   .notification.selected {
     background-color: #5677fc;
     color: white; }

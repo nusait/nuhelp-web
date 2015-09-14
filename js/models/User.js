@@ -13,6 +13,7 @@ var User = State.extend({
         last_name: 'string',
         email: 'string',
         netid: 'string',
+        photo: 'string',
         phone: 'string'
     }
 });

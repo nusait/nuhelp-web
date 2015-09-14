@@ -248,6 +248,7 @@ var User = State.extend({
         last_name: 'string',
         email: 'string',
         netid: 'string',
+        photo: 'string',
         phone: 'string'
     }
 });
@@ -945,7 +946,9 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\">\n    <div class=\"user-name\">User: "
+    + "\">\n    <img class=\"user-photo\" src=\""
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.requester)),stack1 == null || stack1 === false ? stack1 : stack1.photo)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" alt=\"\"/>\n    <div class=\"user-name\">User: "
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.requester)),stack1 == null || stack1 === false ? stack1 : stack1.first_name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + " "
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.requester)),stack1 == null || stack1 === false ? stack1 : stack1.last_name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
