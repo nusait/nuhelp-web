@@ -1,8 +1,10 @@
 <li class="notification fancy-ripple removed status-{{status}}" id="notification-{{id}}" data-id="{{id}}">
     <img class="user-photo" src="{{requester.photo}}" alt=""/>
-    <div class="user-name">User: {{requester.first_name}} {{requester.last_name}}</div>
-    <div class="user-phone">Phone: {{requester.phone}}</div>
-    <div class="status">Status: {{status}}</div>
-    <div class="contact">Buddy: {{contact_name}} {{contact_phone}}</div>
-    <div class="submitted">Created: {{created}}</div>
+    <div class="user-name"><span class="field-name">User:</span> {{requester.first_name}} {{requester.last_name}}</div>
+    <div class="user-phone"><span class="field-name">Phone:</span> {{requester.phone}}</div>
+    <div class="status"><span class="field-name">Status:</span> {{status}}</div>
+    <div class="contact"><span class="field-name">Buddy:</span> {{contact_name}}</div>
+    <div class="contact-phone"><span class="field-name">Buddy #:</span> {{contact_phone}}</div>
+    <div class="submitted"><span class="field-name">Created:</span> {{created_str}}</div>
+    <div class="submitted-ago"><span class="field-name">Ago:</span> {{created_ago}}</div>
 </li>

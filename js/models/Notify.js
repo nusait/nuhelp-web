@@ -31,7 +31,8 @@ var Notify = State.extend({
             deps: ['notified_at', 'canceled_at', 'remaining_time'],
             fn: function () {
                 if ( !! this.notified_at) {
-                    return 'notified';
+                    //return 'notified';
+                    return 'Buddy Warned';
                 }
                 if ( !! this.canceled_at) {
                     return 'canceled';
@@ -40,15 +41,23 @@ var Notify = State.extend({
                     return 'active';
                 }
                 if (this.notified_at === null && this.canceled_at === null) {
-                    return 'expired';
+                    //return 'expired';
+                    return 'SMS Failed';
                 }
                 return 'unknown';
             }
         },
-        created: {
+        created_ago: {
             deps: ['created_at'],
             fn: function () {
                 return moment(this.created_at).fromNow();
+            }
+        },
+        created_str: {
+            deps: ['created_at'],
+            fn: function () {
+                var date = moment(this.created_at);
+                return date.format('MM/DD h:mm:ss a');
             }
         }
     }

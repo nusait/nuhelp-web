@@ -208,7 +208,8 @@ var Notify = State.extend({
             deps: ['notified_at', 'canceled_at', 'remaining_time'],
             fn: function () {
                 if ( !! this.notified_at) {
-                    return 'notified';
+                    //return 'notified';
+                    return 'Buddy Warned';
                 }
                 if ( !! this.canceled_at) {
                     return 'canceled';
@@ -217,15 +218,23 @@ var Notify = State.extend({
                     return 'active';
                 }
                 if (this.notified_at === null && this.canceled_at === null) {
-                    return 'expired';
+                    //return 'expired';
+                    return 'SMS Failed';
                 }
                 return 'unknown';
             }
         },
-        created: {
+        created_ago: {
             deps: ['created_at'],
             fn: function () {
                 return moment(this.created_at).fromNow();
+            }
+        },
+        created_str: {
+            deps: ['created_at'],
+            fn: function () {
+                var date = moment(this.created_at);
+                return date.format('MM/DD h:mm:ss a');
             }
         }
     }
@@ -948,27 +957,31 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   buffer += escapeExpression(stack1)
     + "\">\n    <img class=\"user-photo\" src=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.requester)),stack1 == null || stack1 === false ? stack1 : stack1.photo)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\" alt=\"\"/>\n    <div class=\"user-name\">User: "
+    + "\" alt=\"\"/>\n    <div class=\"user-name\"><span class=\"field-name\">User:</span> "
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.requester)),stack1 == null || stack1 === false ? stack1 : stack1.first_name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + " "
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.requester)),stack1 == null || stack1 === false ? stack1 : stack1.last_name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</div>\n    <div class=\"user-phone\">Phone: "
+    + "</div>\n    <div class=\"user-phone\"><span class=\"field-name\">Phone:</span> "
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.requester)),stack1 == null || stack1 === false ? stack1 : stack1.phone)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</div>\n    <div class=\"status\">Status: ";
+    + "</div>\n    <div class=\"status\"><span class=\"field-name\">Status:</span> ";
   if (helper = helpers.status) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.status); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</div>\n    <div class=\"contact\">Buddy: ";
+    + "</div>\n    <div class=\"contact\"><span class=\"field-name\">Buddy:</span> ";
   if (helper = helpers.contact_name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.contact_name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + " ";
+    + "</div>\n    <div class=\"contact-phone\"><span class=\"field-name\">Buddy #:</span> ";
   if (helper = helpers.contact_phone) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.contact_phone); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</div>\n    <div class=\"submitted\">Created: ";
-  if (helper = helpers.created) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.created); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+    + "</div>\n    <div class=\"submitted\"><span class=\"field-name\">Created:</span> ";
+  if (helper = helpers.created_str) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.created_str); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</div>\n    <div class=\"submitted-ago\"><span class=\"field-name\">Ago:</span> ";
+  if (helper = helpers.created_ago) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.created_ago); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</div>\n</li>";
   return buffer;

@@ -330,9 +330,15 @@ input, textarea {
             transition: box-shadow 0.2s, color 0.2s;
     box-shadow: 0px 1px 8px rgba(100, 100, 100, 0.9); }
   .notification .user-name {
-    margin-top: 15px; }
+    font-size: 1.2em; }
   .notification .user-phone {
+    font-size: 1.2em;
     margin-bottom: 10px; }
+  .notification .field-name {
+    display: inline-block;
+    min-width: 50px;
+    color: #252525;
+    font-size: 0.8em; }
   .notification .user-photo {
     max-width: 120px;
     max-height: 120px;
